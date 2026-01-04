@@ -1,0 +1,12 @@
+{
+    "name": "com.hussnain.fdm",
+    "description": "Hyper Download Manager Native Host",
+    "path": "nm_host.exe",
+    "type": "stdio",
+    "allowed_origins": [
+        "chrome-extension://gjcibhkanadbielaoejhgjpggbehnblp/"
+    ],
+    "allowed_extensions": [
+        "hdm-integration@hyperdownloadmanager.app"
+    ]
+}
