@@ -901,3 +901,117 @@ class AboutDialog(BaseDialog):
         self.main_layout.addWidget(copy_label)
         
         self.main_layout.addSpacing(16)
+
+
+class UpdateDialog(BaseDialog):
+    def __init__(self, parent, new_version, download_url):
+        super().__init__(parent, "Update Available", IconType.DOWNLOAD)
+        self.download_url = download_url
+        self.resize(450, 280)
+        
+        t = theme.current
+        
+        # Content Layout
+        content = QWidget()
+        layout = QVBoxLayout(content)
+        layout.setSpacing(20)
+        layout.setContentsMargins(24, 10, 24, 24)
+        
+        # Header Area
+        header = QHBoxLayout()
+        header.setSpacing(16)
+        
+        # Icon
+        icon_label = QLabel()
+        icon_pixmap = get_pixmap(IconType.DOWNLOAD, t['accent_primary'], 48)
+        icon_label.setPixmap(icon_pixmap)
+        header.addWidget(icon_label)
+        
+        # Text Info
+        info_layout = QVBoxLayout()
+        info_layout.setSpacing(4)
+        
+        title = QLabel("New Version Available")
+        title.setStyleSheet(f"font-family: 'Segoe UI'; font-size: 18px; font-weight: 700; color: {t['text_primary']};")
+        
+        subtitle = QLabel(f"Version {new_version} is ready to download.")
+        subtitle.setStyleSheet(f"font-family: 'Segoe UI'; font-size: 14px; color: {t['text_secondary']};")
+        
+        info_layout.addWidget(title)
+        info_layout.addWidget(subtitle)
+        header.addLayout(info_layout)
+        header.addStretch()
+        
+        layout.addLayout(header)
+        
+        # Release Note / Description (Optional placeholder)
+        note_label = QLabel("Update to get the latest features and bug fixes.")
+        note_label.setWordWrap(True)
+        note_label.setStyleSheet(f"font-family: 'Segoe UI'; font-size: 13px; color: {t['text_muted']}; margin-top: 5px;")
+        layout.addWidget(note_label)
+        
+        layout.addStretch()
+        
+        # Buttons
+        btn_layout = QHBoxLayout()
+        btn_layout.addStretch()
+        
+        self.later_btn = QPushButton("Not Now")
+        self.later_btn.setCursor(Qt.PointingHandCursor)
+        self.later_btn.setFixedHeight(36)
+        self.later_btn.setFixedWidth(100)
+        self.later_btn.clicked.connect(self.reject)
+        
+        self.update_btn = QPushButton("Update Now")
+        self.update_btn.setCursor(Qt.PointingHandCursor)
+        self.update_btn.setFixedHeight(36)
+        self.update_btn.setFixedWidth(130)
+        self.update_btn.clicked.connect(self.accept)
+        
+        btn_layout.addWidget(self.later_btn)
+        btn_layout.addWidget(self.update_btn)
+        
+        layout.addLayout(btn_layout)
+        
+        self.main_layout.addWidget(content)
+        self.apply_theme()
+        
+    def apply_theme(self):
+        super().apply_theme()
+        t = theme.current
+        
+        if hasattr(self, 'later_btn'):
+            self.later_btn.setStyleSheet(f"""
+                QPushButton {{
+                    background-color: transparent;
+                    border: 1px solid {t['border_primary']};
+                    border-radius: 6px;
+                    color: {t['text_primary']};
+                    font-family: 'Segoe UI';
+                    font-weight: 600;
+                    font-size: 13px;
+                }}
+                QPushButton:hover {{
+                    background-color: {t['bg_hover']};
+                }}
+            """)
+        
+        if hasattr(self, 'update_btn'):
+            # Safe color retrieval
+            bg_color = t.get('accent_primary', '#3B82F6')
+            hover_color = t.get('accent_secondary', t.get('accent_primary', '#2563EB'))
+            
+            self.update_btn.setStyleSheet(f"""
+                QPushButton {{
+                    background-color: {bg_color};
+                    border: none;
+                    border-radius: 6px;
+                    color: white;
+                    font-family: 'Segoe UI';
+                    font-weight: 600;
+                    font-size: 13px;
+                }}
+                QPushButton:hover {{
+                    background-color: {hover_color};
+                }}
+            """)

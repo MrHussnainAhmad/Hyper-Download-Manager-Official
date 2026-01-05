@@ -13,6 +13,8 @@ from ui.download_list import DownloadList
 from ui.components import IconLabel
 from core.download_manager import DownloadManager
 from utils.system_monitor import SystemMonitorWorker
+from core.updater import UpdateChecker
+from ui.dialogs import UpdateDialog
 
 
 class MainWindow(QMainWindow):
@@ -39,6 +41,19 @@ class MainWindow(QMainWindow):
         
         # Start monitoring
         self.monitor.start()
+        
+        # Check for updates
+        UPDATE_API_URL = "https://hyper-download-manager-web.vercel.app" 
+        try:
+             with open("version.txt", "r") as f:
+                 current_version = f.read().strip()
+        except:
+             current_version = "1.0.0"
+             
+        self.updater = UpdateChecker(UPDATE_API_URL, current_version)
+        self._setup_updater_signals()
+        # Delay check by 5 seconds to not slow down startup
+        QTimer.singleShot(5000, self.updater.start)
         
         # Restore downloads
         for task in self.manager.downloads:
@@ -71,6 +86,12 @@ class MainWindow(QMainWindow):
         self.action_toggle_theme.setIcon(get_icon(IconType.THEME_DARK, theme.get('text_primary'), 16))
         self.action_toggle_theme.setShortcut("Ctrl+T")
         self.action_toggle_theme.triggered.connect(self.toggle_theme)
+        
+        # Updates Menu
+        updates_menu = self.menuBar().addMenu("Updates")
+        self.action_check_updates = updates_menu.addAction("Check for Updates")
+        self.action_check_updates.setIcon(get_icon(IconType.DOWNLOAD, theme.get('text_primary'), 16))
+        self.action_check_updates.triggered.connect(self.check_for_updates_manual)
         
         # Help Menu
         help_menu = self.menu_bar.addMenu("Help")
@@ -458,3 +479,30 @@ class MainWindow(QMainWindow):
         from ui.dialogs import AboutDialog
         dlg = AboutDialog(self)
         dlg.exec()
+
+    def show_update_dialog(self, new_version, download_url):
+        dlg = UpdateDialog(self, new_version, download_url)
+        if dlg.exec():
+            # User clicked Update Now, open URL
+            import webbrowser
+            webbrowser.open(download_url)
+            
+    def check_for_updates_manual(self):
+        self._is_manual_check = True
+        self.updater.start()
+        
+    def _handle_up_to_date(self):
+        if getattr(self, '_is_manual_check', False):
+            QMessageBox.information(self, "Update Check", "You are using the latest version of Hyper Download Manager.")
+            self._is_manual_check = False
+            
+    def _handle_update_error(self, error):
+        if getattr(self, '_is_manual_check', False):
+            QMessageBox.warning(self, "Update Check Failed", f"Could not check for updates:\n{error}")
+            self._is_manual_check = False
+
+    def _setup_updater_signals(self):
+        # Called from init
+        self.updater.update_available.connect(self.show_update_dialog)
+        self.updater.up_to_date.connect(self._handle_up_to_date)
+        self.updater.error_occurred.connect(self._handle_update_error)
