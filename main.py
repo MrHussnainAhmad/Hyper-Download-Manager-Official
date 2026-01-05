@@ -67,6 +67,10 @@ def setup_application() -> QApplication:
     app.setOrganizationName("FDM")
     app.setOrganizationDomain("fdm.app")
     
+    # Critical for Linux taskbar icon association
+    # Must match the .desktop file name (without .desktop extension)
+    app.setDesktopFileName("hyper-download-manager")
+    
     # Use Fusion style for cross-platform consistency
     app.setStyle("Fusion")
     

@@ -43,3 +43,4 @@ debug_*.py
 
 # Local Config (if any remains, though we use AppData now)
 downloads.json
+

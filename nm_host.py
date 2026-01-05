@@ -47,14 +47,17 @@ def main():
                 if getattr(sys, 'frozen', False):
                     # Running as compiled exe
                     base_path = os.path.dirname(sys.executable)
-                    # Aassuming we compile nm_host.exe and put it in same folder as HyperDownloadManager.exe
-                    exe_path = os.path.join(base_path, "HyperDownloadManager.exe")
+                    
+                    if sys.platform == "win32":
+                        exe_path = os.path.join(base_path, "HyperDownloadManager.exe")
+                    else:
+                        exe_path = os.path.join(base_path, "HyperDownloadManager")
                 else:
                     # Running from source (dev)
                     base_path = os.path.dirname(os.path.abspath(__file__))
                     # We can't really test this easily without python, but dev flow is usually manual
                     # Point to python and main.py
-                    exe_path = "python"
+                    exe_path = sys.executable
                     args = [exe_path, os.path.join(base_path, "main.py"), url]
                 
                 log(f"Target Exe Path: {exe_path}")
@@ -62,12 +65,13 @@ def main():
                 if getattr(sys, 'frozen', False):
                     if os.path.exists(exe_path):
                         log("Executable found, launching...")
-                        subprocess.Popen([exe_path, url], shell=False)
+                        # On Linux, avoiding shell=True helps with argument parsing
+                        subprocess.Popen([exe_path, url])
                         log("Launch command sent")
                     else:
                         log(f"ERROR: Executable not found at {exe_path}")
                 else:
-                    subprocess.Popen(args, shell=True)
+                    subprocess.Popen(args)
                     
                 send_message({"text": "download_started"})
         except Exception as e:
