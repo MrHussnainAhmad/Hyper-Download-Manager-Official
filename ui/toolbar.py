@@ -165,7 +165,20 @@ class ToolbarButton(QPushButton):
         self._pressed = False
         self._accent = accent
         
+        self._compact = False
+        
         self.apply_theme()
+        
+    def set_compact(self, compact: bool):
+        if self._compact != compact:
+            self._compact = compact
+            if compact:
+                self.setFixedSize(48, 48)
+                self.setToolTip(f"{self._text} - {self.toolTip()}")
+            else:
+                self.setFixedSize(76, 68)
+                # Tooltip logic might need refinement to avoid double text if toggled back
+            self.update()
         
     def apply_theme(self):
         t = theme.current
@@ -234,17 +247,26 @@ class ToolbarButton(QPushButton):
         # Draw icon
         icon_size = 26
         icon_pixmap = get_pixmap(self._icon_type, icon_color, icon_size)
-        icon_x = (self.width() - icon_size) // 2
-        icon_y = 12
+        
+        if self._compact:
+            # Centered Icon
+            icon_x = (self.width() - icon_size) // 2
+            icon_y = (self.height() - icon_size) // 2
+        else:
+            # Top Icon
+            icon_x = (self.width() - icon_size) // 2
+            icon_y = 12
+            
         painter.drawPixmap(icon_x, icon_y, icon_pixmap)
         
-        # Draw text
-        painter.setPen(QColor(text_color))
-        text_font = QFont("Segoe UI", 10)
-        text_font.setWeight(QFont.Medium)
-        painter.setFont(text_font)
-        text_rect = self.rect().adjusted(0, 44, 0, 0)
-        painter.drawText(text_rect, Qt.AlignHCenter | Qt.AlignTop, self._text)
+        # Draw text only if not compact
+        if not self._compact:
+            painter.setPen(QColor(text_color))
+            text_font = QFont("Segoe UI", 10)
+            text_font.setWeight(QFont.Medium)
+            painter.setFont(text_font)
+            text_rect = self.rect().adjusted(0, 44, 0, 0)
+            painter.drawText(text_rect, Qt.AlignHCenter | Qt.AlignTop, self._text)
 
 
 class MainToolbar(QWidget):
@@ -377,7 +399,28 @@ class MainToolbar(QWidget):
         for sep in [self.sep1, self.sep2, self.sep3]:
             sep.apply_theme()
             
-        # Update other components
         self.speed_monitor.apply_theme()
         self.theme_btn.apply_theme()
         self.update_theme_icon()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._update_layout()
+        
+    def _update_layout(self):
+        width = self.width()
+        compact = width < 850
+        
+        # Update buttons
+        for btn in [self.add_btn, self.resume_btn, self.pause_btn, 
+                    self.stop_btn, self.remove_btn, self.start_all_btn, 
+                    self.pause_all_btn]:
+            btn.set_compact(compact)
+            
+        # Update separators visibility - hide in compact mode to save space
+        for sep in [self.sep1, self.sep2, self.sep3]:
+            sep.setVisible(not compact)
+            
+        # Adjust height
+        target_height = 68 if compact else 88
+        self.setFixedHeight(target_height)

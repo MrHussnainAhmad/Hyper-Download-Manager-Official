@@ -314,11 +314,17 @@ class Sidebar(QWidget):
         layout.addWidget(self.storage)
         
         # Version info
-        version_label = QLabel("v2.0.0")
-        version_label.setFont(QFont("Segoe UI", 10))
-        version_label.setAlignment(Qt.AlignCenter)
+        try:
+            with open("version.txt", "r") as f:
+                version_text = f"v{f.read().strip()}"
+        except:
+            version_text = "v1.0.0"
+            
+        self.version_label = QLabel(version_text)
+        self.version_label.setFont(QFont("Segoe UI", 10))
+        self.version_label.setAlignment(Qt.AlignCenter)
         layout.addSpacing(8)
-        layout.addWidget(version_label)
+        layout.addWidget(self.version_label)
         
         self.apply_theme()
         
@@ -357,13 +363,14 @@ class Sidebar(QWidget):
         """)
         
         # Find and style specific labels
+        # Find and style specific labels
         for label in self.findChildren(QLabel):
             if label.text() == "DOWNLOADS":
                 label.setStyleSheet(f"""
                     color: {t['text_muted']};
                     letter-spacing: 1.5px;
                 """)
-            elif label.text() == "v2.0.0":
+            elif label == self.version_label:
                 label.setStyleSheet(f"color: {t['text_muted']};")
             elif label.text() == "Manager":
                 label.setStyleSheet(f"color: {t['text_muted']};")

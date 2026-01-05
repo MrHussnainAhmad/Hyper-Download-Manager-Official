@@ -328,84 +328,66 @@ class DownloadedDialog(BaseDialog):
         self.task = task
         self.resize(500, 320)
         
-        # Success Message with large icon
-        success_layout = QVBoxLayout()
-        success_layout.setAlignment(Qt.AlignCenter)
-        success_layout.setSpacing(16)
+        # Centered Layout
+        layout = QVBoxLayout()
+        layout.setAlignment(Qt.AlignCenter)
+        layout.setSpacing(24)
         
-        # Large success icon with glow effect
-        success_container = QFrame()
-        success_container.setFixedSize(80, 80)
-        success_container_layout = QVBoxLayout(success_container)
-        success_container_layout.setContentsMargins(0, 0, 0, 0)
-        success_container_layout.setAlignment(Qt.AlignCenter)
+        # Hero Icon (Large Checkmark)
+        icon_container = QFrame()
+        icon_container.setFixedSize(96, 96)
+        t = theme.current
+        bg_color = QColor(t['accent_success'])
+        bg_color.setAlpha(20)
+        icon_container.setStyleSheet(f"background-color: {bg_color.name(QColor.HexArgb)}; border-radius: 48px;")
+        
+        icon_layout = QVBoxLayout(icon_container)
+        icon_layout.setContentsMargins(0,0,0,0)
+        icon_layout.setAlignment(Qt.AlignCenter)
         
         success_icon = IconLabel(IconType.COMPLETE, 48)
         success_icon.set_color(theme.get('accent_success'))
-        success_container_layout.addWidget(success_icon)
+        icon_layout.addWidget(success_icon)
         
-        t = theme.current
-        success_bg = QColor(t['accent_success'])
-        success_bg.setAlpha(25)
-        success_container.setStyleSheet(f"""
-            QFrame {{
-                background-color: {success_bg.name(QColor.HexArgb)};
-                border-radius: 40px;
-            }}
-        """)
+        layout.addWidget(icon_container, 0, Qt.AlignCenter)
         
-        success_layout.addWidget(success_container, alignment=Qt.AlignCenter)
+        # Text Info
+        text_layout = QVBoxLayout()
+        text_layout.setSpacing(8)
         
-        success_msg = QLabel("Download Completed Successfully!")
-        success_msg.setFont(QFont("Segoe UI", 15, QFont.DemiBold))
-        success_msg.setAlignment(Qt.AlignCenter)
-        success_msg.setStyleSheet(f"color: {t['text_primary']};")
-        success_layout.addWidget(success_msg)
+        title = QLabel("Download Complete")
+        title.setFont(QFont("Segoe UI", 18, QFont.Bold))
+        title.setAlignment(Qt.AlignCenter)
+        title.setStyleSheet(f"color: {t['text_primary']};")
+        text_layout.addWidget(title)
         
-        self.main_layout.addLayout(success_layout)
-        
-        self.main_layout.addWidget(Divider())
-        
-        # File Info
-        info_layout = QGridLayout()
-        info_layout.setSpacing(10)
-        info_layout.setColumnMinimumWidth(0, 80)
-        
-        file_icon = IconLabel(IconType.FILE, 16)
-        info_layout.addWidget(file_icon, 0, 0, Qt.AlignRight)
+        # File Name
         name_label = QLabel(os.path.basename(task.save_path))
-        name_label.setStyleSheet(f"font-weight: 600; color: {t['text_primary']};")
+        name_label.setFont(QFont("Segoe UI", 11, QFont.DemiBold))
+        name_label.setStyleSheet(f"color: {t['text_secondary']};")
+        name_label.setAlignment(Qt.AlignCenter)
         name_label.setWordWrap(True)
-        info_layout.addWidget(name_label, 0, 1)
+        text_layout.addWidget(name_label)
         
-        size_icon = IconLabel(IconType.STORAGE, 16)
-        info_layout.addWidget(size_icon, 1, 0, Qt.AlignRight)
-        size_label = QLabel(format_bytes(task.file_size))
-        size_label.setStyleSheet(f"color: {t['accent_primary']}; font-weight: 600;")
-        info_layout.addWidget(size_label, 1, 1)
+        # Path (Clickable/Selectable hint)
+        path_label = QLabel(os.path.dirname(task.save_path))
+        path_label.setFont(QFont("Segoe UI", 10))
+        path_label.setStyleSheet(f"color: {t['text_muted']};")
+        path_label.setAlignment(Qt.AlignCenter)
+        path_label.setWordWrap(True)
+        text_layout.addWidget(path_label)
         
-        folder_icon = IconLabel(IconType.FOLDER, 16)
-        info_layout.addWidget(folder_icon, 2, 0, Qt.AlignRight)
-        loc_label = QLabel(os.path.dirname(task.save_path))
-        loc_label.setWordWrap(True)
-        loc_label.setStyleSheet(f"color: {t['text_muted']};")
-        info_layout.addWidget(loc_label, 2, 1)
+        layout.addLayout(text_layout)
         
-        self.main_layout.addLayout(info_layout)
-        
+        self.main_layout.addLayout(layout)
         self.main_layout.addStretch()
         
-        # Action Buttons
+        # Actions
         btn_layout = QHBoxLayout()
-        btn_layout.setSpacing(14)
-        
-        self.close_btn = IconButton(IconType.CLOSE, "Close", variant="ghost")
-        self.close_btn.clicked.connect(self.accept)
-        btn_layout.addWidget(self.close_btn)
-        
+        btn_layout.setSpacing(16)
         btn_layout.addStretch()
         
-        self.folder_btn = IconButton(IconType.FOLDER, "Open Folder", variant="secondary")
+        self.folder_btn = IconButton(IconType.FOLDER, "Show in Folder", variant="secondary")
         self.folder_btn.setMinimumWidth(140)
         self.folder_btn.clicked.connect(self.open_folder)
         btn_layout.addWidget(self.folder_btn)
@@ -415,7 +397,14 @@ class DownloadedDialog(BaseDialog):
         self.open_btn.clicked.connect(self.open_file)
         btn_layout.addWidget(self.open_btn)
         
+        btn_layout.addStretch()
+        
+        # Close at bottom? No, standard dialog buttons usually bottom right. 
+        # But for this "Success" card style, centered buttons or bottom bar is fine.
+        # Let's keep them centered for the "hero" feel.
+        
         self.main_layout.addLayout(btn_layout)
+        self.main_layout.addSpacing(16)
 
     def open_file(self):
         try:
@@ -441,171 +430,145 @@ class ProgressDialog(BaseDialog):
     def __init__(self, task, parent=None):
         super().__init__(parent, "Downloading...", IconType.DOWNLOAD)
         self.task = task
-        self.resize(560, 420)
+        self.resize(550, 480)
         
         t = theme.current
         
-        # File Name Header
-        file_layout = QHBoxLayout()
-        file_layout.setSpacing(12)
+        # Main Layout
+        layout = QVBoxLayout()
+        layout.setSpacing(16)
         
-        file_icon = IconLabel(IconType.FILE, 28)
-        file_layout.addWidget(file_icon)
+        # 1. File Name (Header)
+        header_layout = QHBoxLayout()
+        header_layout.setSpacing(16)
         
+        # Icon
+        icon_container = QFrame()
+        icon_container.setFixedSize(48, 48)
+        bg_color = QColor(t['accent_primary'])
+        bg_color.setAlpha(20)
+        icon_container.setStyleSheet(f"background-color: {bg_color.name(QColor.HexArgb)}; border-radius: 24px;")
+        icon_layout = QVBoxLayout(icon_container)
+        icon_layout.setContentsMargins(0,0,0,0)
+        icon_layout.addWidget(IconLabel(IconType.FILE, 24), 0, Qt.AlignCenter)
+        header_layout.addWidget(icon_container)
+        
+        # Title
         self.file_header = QLabel(task.save_path.split(os.sep)[-1])
-        self.file_header.setFont(QFont("Segoe UI", 14, QFont.DemiBold))
+        self.file_header.setFont(QFont("Segoe UI", 14, QFont.Bold))
         self.file_header.setWordWrap(True)
         self.file_header.setStyleSheet(f"color: {t['text_primary']};")
-        file_layout.addWidget(self.file_header)
-        file_layout.addStretch()
+        header_layout.addWidget(self.file_header)
+        header_layout.addStretch()
+        layout.addLayout(header_layout)
         
-        self.main_layout.addLayout(file_layout)
+        layout.addSpacing(10)
         
-        # URL (truncated)
-        url_display = task.url if len(task.url) < 60 else task.url[:57] + "..."
-        self.url_label = QLabel(url_display)
-        self.url_label.setStyleSheet(f"color: {t['text_muted']}; font-size: 11px;")
-        self.main_layout.addWidget(self.url_label)
+        # 2. Details Grid (The User's specific list)
+        grid = QGridLayout()
+        grid.setSpacing(12)
+        grid.setColumnStretch(1, 1) # Value column stretches
         
-        self.main_layout.addSpacing(20)
+        # Helper to create rows
+        def add_row(row, label_text, value_widget):
+            lbl = QLabel(label_text)
+            lbl.setFont(QFont("Segoe UI", 10))
+            lbl.setStyleSheet(f"color: {t['text_muted']}; font-weight: 500;")
+            grid.addWidget(lbl, row, 0)
+            grid.addWidget(value_widget, row, 1)
+
+        # URL
+        self.url_val = QLabel(task.url)
+        self.url_val.setFont(QFont("Segoe UI", 10))
+        self.url_val.setStyleSheet(f"color: {t['text_secondary']};")
+        self.url_val.setWordWrap(True)
+        self.url_val.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        add_row(0, "File URL:", self.url_val)
         
-        # Progress Bar
+        # Size (Total)
+        self.size_val = QLabel(format_bytes(task.file_size))
+        self.size_val.setFont(QFont("Segoe UI", 10, QFont.Bold))
+        self.size_val.setStyleSheet(f"color: {t['text_primary']};")
+        add_row(1, "File Size:", self.size_val)
+        
+        # Downloaded
+        self.downloaded_val = QLabel("-")
+        self.downloaded_val.setFont(QFont("Segoe UI", 10))
+        self.downloaded_val.setStyleSheet(f"color: {t['accent_primary']};")
+        add_row(2, "Downloaded:", self.downloaded_val)
+        
+        # Remaining
+        self.remaining_val = QLabel("-")
+        self.remaining_val.setFont(QFont("Segoe UI", 10))
+        self.remaining_val.setStyleSheet(f"color: {t['text_secondary']};")
+        add_row(3, "Remaining:", self.remaining_val)
+        
+        # ETA
+        self.eta_val = QLabel("-")
+        self.eta_val.setFont(QFont("Segoe UI", 10))
+        self.eta_val.setStyleSheet(f"color: {t['text_secondary']};")
+        add_row(4, "ETA:", self.eta_val)
+        
+        # Speed 
+        self.speed_val = QLabel("-")
+        self.speed_val.setFont(QFont("Segoe UI", 10))
+        self.speed_val.setStyleSheet(f"color: {t['accent_primary']};")
+        add_row(5, "Transfer Rate:", self.speed_val)
+
+        layout.addLayout(grid)
+        
+        layout.addSpacing(16)
+        
+        # 3. Progress Bar
         self.progress_bar = AnimatedProgressBar()
-        self.progress_bar.setFixedHeight(26)
-        self.main_layout.addWidget(self.progress_bar)
+        self.progress_bar.setFixedHeight(12)
+        layout.addWidget(self.progress_bar)
         
-        self.main_layout.addSpacing(12)
-        
-        # Speed Display - Prominent
-        speed_card = QFrame()
-        speed_card.setFixedHeight(70)
-        speed_layout = QHBoxLayout(speed_card)
-        speed_layout.setContentsMargins(20, 0, 20, 0)
-        
-        speed_icon = IconLabel(IconType.SPEED, 32)
-        speed_layout.addWidget(speed_icon)
-        
-        speed_text_layout = QVBoxLayout()
-        speed_text_layout.setSpacing(2)
-        
-        self.speed_label = QLabel("0 B/s")
-        self.speed_label.setFont(QFont("Segoe UI", 22, QFont.Bold))
-        self.speed_label.setStyleSheet(f"color: {t['accent_primary']};")
-        speed_text_layout.addWidget(self.speed_label)
-        
-        speed_subtitle = QLabel("Download Speed")
-        speed_subtitle.setStyleSheet(f"color: {t['text_muted']}; font-size: 11px;")
-        speed_text_layout.addWidget(speed_subtitle)
-        
-        speed_layout.addLayout(speed_text_layout)
-        speed_layout.addStretch()
-        
-        speed_bg = QColor(t['accent_primary'])
-        speed_bg.setAlpha(15)
-        speed_card.setStyleSheet(f"""
-            QFrame {{
-                background-color: {speed_bg.name(QColor.HexArgb)};
-                border-radius: 12px;
-            }}
-        """)
-        
-        self.main_layout.addWidget(speed_card)
-        
-        self.main_layout.addSpacing(8)
-        self.main_layout.addWidget(Divider())
-        self.main_layout.addSpacing(8)
-        
-        # Stats Grid
-        stats_grid = QGridLayout()
-        stats_grid.setSpacing(20)
-        stats_grid.setColumnStretch(1, 1)
-        stats_grid.setColumnStretch(3, 1)
-        
-        # Row 0
-        stats_grid.addWidget(self._create_stat_label(IconType.STORAGE, "File Size"), 0, 0)
-        self.size_value = self._create_stat_value("-")
-        stats_grid.addWidget(self.size_value, 0, 1)
-        
-        stats_grid.addWidget(self._create_stat_label(IconType.DOWNLOAD, "Downloaded"), 0, 2)
-        self.downloaded_value = self._create_stat_value("-")
-        stats_grid.addWidget(self.downloaded_value, 0, 3)
-        
-        # Row 1
-        stats_grid.addWidget(self._create_stat_label(IconType.ARROW_UP, "Remaining"), 1, 0)
-        self.remaining_value = self._create_stat_value("-")
-        stats_grid.addWidget(self.remaining_value, 1, 1)
-        
-        stats_grid.addWidget(self._create_stat_label(IconType.CLOCK, "Time Left"), 1, 2)
-        self.eta_value = self._create_stat_value("-")
-        stats_grid.addWidget(self.eta_value, 1, 3)
-        
-        self.main_layout.addLayout(stats_grid)
-        
-        self.main_layout.addStretch()
+        layout.addStretch()
         
         # Action Buttons
         btn_layout = QHBoxLayout()
-        btn_layout.setSpacing(14)
+        btn_layout.setSpacing(12)
+        btn_layout.addStretch()
         
         self.hide_btn = IconButton(IconType.MINIMIZE, "Hide", variant="ghost")
         self.hide_btn.clicked.connect(self.accept)
         btn_layout.addWidget(self.hide_btn)
         
-        btn_layout.addStretch()
-        
+        self.pause_btn = IconButton(IconType.PAUSE, "Pause", variant="secondary")
+        self.pause_btn.setMinimumWidth(100)
+        self.pause_btn.clicked.connect(self.toggle_pause)
+        btn_layout.addWidget(self.pause_btn)
+
         self.cancel_btn = IconButton(IconType.CLOSE, "Cancel", variant="danger")
-        self.cancel_btn.setMinimumWidth(110)
+        self.cancel_btn.setMinimumWidth(100)
         self.cancel_btn.clicked.connect(self.cancel_download)
         btn_layout.addWidget(self.cancel_btn)
         
-        self.pause_btn = IconButton(IconType.PAUSE, "Pause", variant="secondary")
-        self.pause_btn.setMinimumWidth(110)
-        self.pause_btn.clicked.connect(self.toggle_pause)
-        btn_layout.addWidget(self.pause_btn)
-        
+        self.main_layout.addLayout(layout)
         self.main_layout.addLayout(btn_layout)
         
         # Connect signals
         self.task.progress_updated.connect(self.update_stats)
         self.task.finished.connect(self.on_finished)
         
-        self.update_stats(0, 0, 0)
-        
-    def _create_stat_label(self, icon_type: IconType, text: str) -> QWidget:
-        widget = QWidget()
-        layout = QHBoxLayout(widget)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(6)
-        
-        icon = IconLabel(icon_type, 14)
-        icon.set_color(theme.get('text_muted'))
-        layout.addWidget(icon)
-        
-        label = QLabel(text)
-        label.setStyleSheet(f"color: {theme.get('text_muted')}; font-size: 11px;")
-        layout.addWidget(label)
-        layout.addStretch()
-        
-        return widget
-        
-    def _create_stat_value(self, text: str) -> QLabel:
-        label = QLabel(text)
-        label.setStyleSheet(f"color: {theme.get('text_primary')}; font-weight: 600; font-size: 13px;")
-        return label
-
     def update_stats(self, progress, speed, eta):
+        # Update values
         self.progress_bar.setValue(progress)
-        self.speed_label.setText(format_speed(speed))
-        self.eta_value.setText(format_time(eta) if eta > 0 else "-")
+        self.speed_val.setText(format_speed(speed))
+        self.eta_val.setText(format_time(eta) if eta > 0 else "Calculating...")
         
-        size = self.task.file_size
-        self.size_value.setText(format_bytes(size) if size > 0 else "-")
+        current_size = self.task.downloaded_bytes
+        total_size = self.task.file_size
         
-        downloaded = self.task.downloaded_bytes
-        self.downloaded_value.setText(format_bytes(downloaded))
+        self.downloaded_val.setText(f"{format_bytes(current_size)}")
         
-        remaining = max(0, size - downloaded)
-        self.remaining_value.setText(format_bytes(remaining))
+        # Update Total size if it changed (e.g. started as 0)
+        if self.size_val.text() == "0 B" and total_size > 0:
+            self.size_val.setText(format_bytes(total_size))
+            
+        remaining = max(0, total_size - current_size)
+        self.remaining_val.setText(format_bytes(remaining))
 
     def on_finished(self):
         self.accept()
@@ -627,11 +590,9 @@ class ProgressDialog(BaseDialog):
             self.pause_btn.setText("Pause")
 
     def cancel_download(self):
-        parent = self.parent()
-        if parent and hasattr(parent, 'manager'):
-            parent.manager.remove_download(self.task)
-        else:
-            self.task.delete_all_files()
+        # User requested: "Cancel" should just pause and close, NOT delete.
+        if self.task.status == "Downloading":
+            self.task.pause()
         self.reject()
 
 

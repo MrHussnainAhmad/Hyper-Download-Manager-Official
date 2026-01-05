@@ -1,6 +1,7 @@
 import psutil
 import time
-from PySide6.QtCore import QObject, Signal, QThread
+import os
+from PySide6.QtCore import QObject, Signal, QThread, QStandardPaths
 
 class SystemMonitorWorker(QThread):
     speed_updated = Signal(float) # bytes per second
@@ -30,9 +31,14 @@ class SystemMonitorWorker(QThread):
             self.last_io = current_io
             self.last_time = current_time
 
-            # Disk Usage (C:)
+            # Disk Usage (Downloads Folder)
             try:
-                usage = psutil.disk_usage('C:\\')
+                # Use standard downloads location to check disk space
+                path = QStandardPaths.writableLocation(QStandardPaths.DownloadLocation)
+                if not os.path.exists(path):
+                    path = os.path.expanduser("~")
+                    
+                usage = psutil.disk_usage(path)
                 self.disk_usage_updated.emit(usage.free, usage.total, usage.percent)
             except Exception:
                 pass
