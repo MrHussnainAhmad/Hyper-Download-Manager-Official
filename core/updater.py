@@ -1,6 +1,7 @@
 import requests
 from PySide6.QtCore import QThread, Signal, QObject
 import os
+import platform # Added at module level
 
 class UpdateChecker(QThread):
     update_available = Signal(str, str) # version, download_url
@@ -16,7 +17,17 @@ class UpdateChecker(QThread):
         try:
             # Add timestamp to prevent caching
             import time
-            url = f"{self.api_url}/api/version?platform=windows&t={int(time.time())}"
+            
+            # Detect platform
+            system = platform.system().lower()
+            if system == "windows":
+                plat_param = "windows"
+            elif system == "linux":
+                plat_param = "linux"
+            else:
+                plat_param = "windows" # Default to windows behavior if unknown
+            
+            url = f"{self.api_url}/api/version?platform={plat_param}&t={int(time.time())}"
             
             response = requests.get(url, timeout=10)
             response.raise_for_status()
@@ -26,10 +37,27 @@ class UpdateChecker(QThread):
             download_url = data.get("downloadUrl")
             
             if remote_version:
-                if self._is_newer(remote_version):
-                    self.update_available.emit(remote_version, download_url)
+                # Validate URL extension against platform
+                valid_update = False
+                if plat_param == "windows":
+                    if download_url and download_url.lower().endswith(".exe"):
+                        valid_update = True
+                elif plat_param == "linux":
+                    if download_url and download_url.lower().endswith(".deb"):
+                        valid_update = True
+                
+                if valid_update:
+                    if self._is_newer(remote_version):
+                        self.update_available.emit(remote_version, download_url)
+                    else:
+                        self.up_to_date.emit()
                 else:
-                    self.up_to_date.emit()
+                     # If format doesn't match OS (e.g. linux user got .exe), treat as no update or error
+                     # For now, we just don't emit update_available to avoid false positives
+                     # We can emit up_to_date if we want to be silent, or error. 
+                     # Given the requirements "do nothing", we might just emit up_to_date or nothing.
+                     # Let's emit up_to_date so manual checks don't hang if they expect a signal.
+                     self.up_to_date.emit()
             else:
                 self.error_occurred.emit("Invalid response from server")
                 

@@ -54,6 +54,27 @@ function shouldHandleDownload(downloadItem) {
     return false;
   }
 
+  // Check for "garbage" files (web pages, scripts, data)
+  const ignoredExtensions = [
+    'html', 'htm', 'xml', 'json', 'js', 'css', 'map', 'txt', 'md'
+  ];
+
+  const ignoredMimes = [
+    'text/html', 'text/xml', 'application/json', 'text/css',
+    'text/javascript', 'application/javascript'
+  ];
+
+  const ext = (downloadItem.filename || "").split('.').pop().toLowerCase();
+  if (ignoredExtensions.includes(ext)) {
+    console.log("Ignoring extension:", ext, downloadItem.url);
+    return false;
+  }
+
+  if (downloadItem.mime && ignoredMimes.includes(downloadItem.mime)) {
+    console.log("Ignoring mime:", downloadItem.mime, downloadItem.url);
+    return false;
+  }
+
   return true;
 }
 

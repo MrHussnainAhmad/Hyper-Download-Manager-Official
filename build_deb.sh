@@ -45,6 +45,9 @@ echo "Building executable..."
     --add-data "version.txt:." \
     main.py
 
+echo "Building nm_host..."
+"$VENV_PYINSTALLER" nm_host.spec
+
 # 3. Create .deb directory structure
 echo "Creating .deb directory structure..."
 BUILD_DEB_DIR="build_deb"
@@ -56,6 +59,7 @@ mkdir -p "$BUILD_DEB_DIR/usr/share/icons/hicolor/512x512/apps"
 # 4. Copy application files
 echo "Copying application files..."
 cp -r dist/HyperDownloadManager/* "$BUILD_DEB_DIR/opt/$APP_NAME/"
+cp dist/nm_host "$BUILD_DEB_DIR/opt/$APP_NAME/"
 
 # 5. Native Native Messaging Configuration
 echo "Configuring Native Messaging..."

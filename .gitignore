@@ -44,3 +44,20 @@ debug_*.py
 # Local Config (if any remains, though we use AppData now)
 downloads.json
 
+# Virtual Environments
+venv/
+env/
+
+# IDEs
+.idea/
+
+# OS Generated
+.DS_Store
+Thumbs.db
+
+# Temporary/Output Files
+test_output.txt
+api_response.txt
+.env
+verify_fix.py
+manual_test.py
