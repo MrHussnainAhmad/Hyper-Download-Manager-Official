@@ -15,6 +15,7 @@ from core.download_manager import DownloadManager
 from utils.system_monitor import SystemMonitorWorker
 from core.updater import UpdateChecker
 from ui.dialogs import UpdateDialog
+from utils.helpers import get_app_version
 
 
 class MainWindow(QMainWindow):
@@ -44,11 +45,7 @@ class MainWindow(QMainWindow):
         
         # Check for updates
         UPDATE_API_URL = "https://hyper-download-manager-web.vercel.app" 
-        try:
-             with open("version.txt", "r") as f:
-                 current_version = f.read().strip()
-        except:
-             current_version = "1.0.0"
+        current_version = get_app_version()
              
         self.updater = UpdateChecker(UPDATE_API_URL, current_version)
         self._setup_updater_signals()
@@ -294,6 +291,12 @@ class MainWindow(QMainWindow):
                 self.handle_new_download(url)
                 
     def handle_new_download(self, url):
+        try:
+            with open("debug_urls.log", "a") as f:
+                f.write(f"Received URL: {url}\n")
+        except:
+            pass
+
         from ui.dialogs import DownloadConfirmationDialog, ProgressDialog
         
         self.raise_()

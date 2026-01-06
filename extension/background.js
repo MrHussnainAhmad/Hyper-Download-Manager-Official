@@ -15,25 +15,47 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   }
 });
 
-chrome.downloads.onCreated.addListener((downloadItem) => {
-  // Simple logic: if it has a URL, cancel browser download and send to FDM
-  if (downloadItem.url && downloadItem.state !== "interrupted") {
-
-    // Check if it's an image
-    const isImage = /\.(png|jpg|jpeg|gif|webp|bmp|svg|ico|tiff)$/i.test(downloadItem.filename || downloadItem.url);
-    const isImageMime = (downloadItem.mime && downloadItem.mime.startsWith("image/"));
-
-    if (isImage || isImageMime) {
-      console.log("Ignoring image download:", downloadItem.url);
-      return; // Let browser handle it
-    }
-
+// Main interception logic
+chrome.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
+  if (shouldHandleDownload(downloadItem)) {
+    // Cancel browser download immediately to prevent "Save As" popup
     chrome.downloads.cancel(downloadItem.id, () => {
-      console.log("Cancelled browser download, sending to FDM:", downloadItem.url);
-      sendToNativeHost(downloadItem.url);
+      if (chrome.runtime.lastError) {
+        console.error("Cancel error:", chrome.runtime.lastError.message);
+      } else {
+        console.log("Cancelled browser download (onDeterminingFilename), sending to FDM:", downloadItem.url);
+        sendToNativeHost(downloadItem.url);
+      }
     });
+    // We don't call suggest() because we cancelled the download. 
+    // Calling it on a dead download id might cause an error or be ignored.
+  } else {
+    // Pass through to browser default behavior
+    suggest();
   }
 });
+
+function shouldHandleDownload(downloadItem) {
+  if (!downloadItem.url || downloadItem.state === "interrupted") {
+    return false;
+  }
+
+  // Protocol check
+  if (!downloadItem.url.startsWith("http")) {
+    return false;
+  }
+
+  // Check if it's an image
+  const isImage = /\.(png|jpg|jpeg|gif|webp|bmp|svg|ico|tiff)$/i.test(downloadItem.filename || "");
+  const isImageMime = (downloadItem.mime && downloadItem.mime.startsWith("image/"));
+
+  if (isImage || isImageMime) {
+    console.log("Ignoring image download:", downloadItem.url);
+    return false;
+  }
+
+  return true;
+}
 
 function sendToNativeHost(url) {
   const hostName = "com.hussnain.fdm";

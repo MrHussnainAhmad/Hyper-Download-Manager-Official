@@ -56,6 +56,7 @@ def get_app_icon() -> QIcon:
 
 def setup_application() -> QApplication:
     """Initialize and configure the application"""
+    from utils.helpers import get_app_version
     setup_environment()
     
     # Create application
@@ -63,7 +64,7 @@ def setup_application() -> QApplication:
     
     # Application metadata
     app.setApplicationName("Hyper Download Manager")
-    app.setApplicationVersion("2.0.0")
+    app.setApplicationVersion(get_app_version())
     app.setOrganizationName("FDM")
     app.setOrganizationDomain("fdm.app")
     

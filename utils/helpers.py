@@ -1,7 +1,7 @@
 """
 Utility helper functions for formatting and calculations
 """
-
+import os
 
 def format_bytes(bytes_value: int, precision: int = 1) -> str:
     """
@@ -271,3 +271,20 @@ def get_resource_path(relative_path: str) -> str:
             
     # Default return (even if not exists, return best guess)
     return os.path.join(root_from_file, relative_path)
+
+
+def get_app_version() -> str:
+    """
+    Get application version from version.txt using robust path finding.
+    
+    Returns:
+        Version string (e.g. "1.0.0")
+    """
+    try:
+        version_path = get_resource_path("version.txt")
+        if os.path.exists(version_path):
+            with open(version_path, "r") as f:
+                return f.read().strip()
+    except Exception as e:
+        print(f"Error reading version: {e}")
+    return "1.0.0"

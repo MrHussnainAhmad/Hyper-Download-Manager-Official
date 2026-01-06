@@ -11,7 +11,7 @@ python -m pip install --upgrade pyinstaller
 python -m pip install Pillow
 
 echo Building Hyper Download Manager (Windowed)...
-python -m PyInstaller --noconfirm --onedir --windowed --name "HyperDownloadManager" --icon "icon.ico" --add-data "ui;ui" --add-data "core;core" --add-data "utils;utils" --add-data "extension;extension" --add-data "LICENSE.txt;." --add-data "icon.png;." --add-data "icon.ico;." main.py
+python -m PyInstaller --noconfirm --onedir --windowed --name "HyperDownloadManager" --icon "icon.ico" --add-data "ui;ui" --add-data "core;core" --add-data "utils;utils" --add-data "extension;extension" --add-data "LICENSE.txt;." --add-data "icon.png;." --add-data "icon.ico;." --add-data "version.txt;." main.py
 
 echo Building Native Messaging Host (Console)...
 python -m PyInstaller --noconfirm --onefile --console --name "nm_host" --icon "icon.ico" nm_host.py

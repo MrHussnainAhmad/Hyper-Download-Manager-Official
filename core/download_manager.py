@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from PySide6.QtCore import QObject, Signal, QStandardPaths, QTimer
 from core.downloader import DownloadTask
 
@@ -86,6 +87,7 @@ class DownloadManager(QObject):
                         task.status = item.get("status", "Stopped")
                         task.file_size = item.get("file_size", 0)
                         task.downloaded_bytes = item.get("downloaded_bytes", 0)
+                        task.added_time = item.get("added_time", time.time())
                         
                         # Reset transient states
                         if task.status == "Downloading":
@@ -108,7 +110,8 @@ class DownloadManager(QObject):
                 "save_path": task.save_path,
                 "status": task.status,
                 "file_size": task.file_size,
-                "downloaded_bytes": task.downloaded_bytes
+                "downloaded_bytes": task.downloaded_bytes,
+                "added_time": task.added_time
             })
         
         try:

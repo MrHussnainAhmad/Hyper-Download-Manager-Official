@@ -34,7 +34,16 @@ cd "$TEMP_BUILD_DIR"
 
 # 2. Build executable with PyInstaller
 echo "Building executable..."
-"$VENV_PYINSTALLER" --clean HyperDownloadManager.spec
+# Build with explicit arguments to ensure version.txt and assets are included
+"$VENV_PYINSTALLER" --noconfirm --onedir --windowed --name "HyperDownloadManager" \
+    --add-data "ui:ui" \
+    --add-data "core:core" \
+    --add-data "utils:utils" \
+    --add-data "extension:extension" \
+    --add-data "LICENSE.txt:." \
+    --add-data "icon.png:." \
+    --add-data "version.txt:." \
+    main.py
 
 # 3. Create .deb directory structure
 echo "Creating .deb directory structure..."

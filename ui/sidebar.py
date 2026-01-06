@@ -7,7 +7,7 @@ from PySide6.QtGui import QFont, QColor, QPainter, QPixmap
 from ui.theme_manager import theme
 from ui.icons import IconType, IconProvider, get_pixmap, get_icon
 from ui.components import IconLabel, Divider, IconButton
-from utils.helpers import format_bytes
+from utils.helpers import format_bytes, get_app_version
 
 
 class CategoryItem(QTreeWidgetItem):
@@ -314,11 +314,7 @@ class Sidebar(QWidget):
         layout.addWidget(self.storage)
         
         # Version info
-        try:
-            with open("version.txt", "r") as f:
-                version_text = f"v{f.read().strip()}"
-        except:
-            version_text = "v1.0.0"
+        version_text = f"v{get_app_version()}"
             
         self.version_label = QLabel(version_text)
         self.version_label.setFont(QFont("Segoe UI", 10))

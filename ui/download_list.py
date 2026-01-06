@@ -389,7 +389,8 @@ class DownloadList(QWidget):
         
         # 6: Date
         from datetime import datetime
-        date_item = QTableWidgetItem(datetime.now().strftime("%H:%M"))
+        added_dt = datetime.fromtimestamp(task.added_time)
+        date_item = QTableWidgetItem(added_dt.strftime("%H:%M"))
         date_item.setTextAlignment(Qt.AlignCenter)
         date_item.setFont(QFont("Segoe UI", 11))
         date_item.setForeground(QColor(t['text_muted']))

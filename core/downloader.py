@@ -72,6 +72,7 @@ class DownloadTask(QObject):
         self.downloaded_bytes = 0
         self.status = "Idle"
         self.start_time = 0
+        self.added_time = time.time()
         self.chunk_progress = {} # chunk_id: bytes_downloaded_in_chunk
         
         # Temp Management
@@ -168,15 +169,32 @@ class DownloadTask(QObject):
             self.merge_parts()
 
     def merge_parts(self):
+        # Double-check if we are already merging or finished to prevent race conditions
+        if self.status == "Merging" or self.status == "Finished":
+            return
+            
+        # Verify all threads are done? 
+        # Actually, _on_worker_progress triggers this when TOTAL matches file_size.
+        # But workers might still be flushing?
+        # Let's wait for workers to finish
+        for worker in self.workers:
+            worker.wait()
+
         self.status = "Merging"
         self.status_changed.emit("Merging")
         try:
             with open(self.save_path, "wb") as outfile:
                 for i in range(self.num_threads):
                     part_path = os.path.join(self.temp_dir, f"part_{i}")
-                    if os.path.exists(part_path):
-                        with open(part_path, "rb") as infile:
-                            outfile.write(infile.read())
+                    if not os.path.exists(part_path):
+                         raise Exception(f"Missing part file: {part_path}")
+                         
+                    with open(part_path, "rb") as infile:
+                        while True:
+                            chunk = infile.read(1024 * 1024) # 1MB chunks
+                            if not chunk:
+                                break
+                            outfile.write(chunk)
             
             # Cleanup
             self.delete_temp_files()
