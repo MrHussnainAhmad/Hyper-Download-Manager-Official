@@ -40,6 +40,9 @@ hdm_debug.log
 # Project Specific
 key_temp.txt
 debug_*.py
+nm_manifest.json
+nm_manifest_prod.json
+api_check.py
 
 # Local Config (if any remains, though we use AppData now)
 downloads.json
