@@ -865,7 +865,7 @@ class AboutDialog(BaseDialog):
 
 
 class UpdateDialog(BaseDialog):
-    def __init__(self, parent, new_version, download_url):
+    def __init__(self, parent, new_version, download_url, note=""):
         super().__init__(parent, "Update Available", IconType.DOWNLOAD)
         self.download_url = download_url
         self.resize(450, 280)
@@ -905,8 +905,9 @@ class UpdateDialog(BaseDialog):
         
         layout.addLayout(header)
         
-        # Release Note / Description (Optional placeholder)
-        note_label = QLabel("Update to get the latest features and bug fixes.")
+        # Release Note / Description
+        note_text = note if note else "Update to get the latest features and bug fixes."
+        note_label = QLabel(note_text)
         note_label.setWordWrap(True)
         note_label.setStyleSheet(f"font-family: 'Segoe UI'; font-size: 13px; color: {t['text_muted']}; margin-top: 5px;")
         layout.addWidget(note_label)

@@ -483,8 +483,8 @@ class MainWindow(QMainWindow):
         dlg = AboutDialog(self)
         dlg.exec()
 
-    def show_update_dialog(self, new_version, download_url):
-        dlg = UpdateDialog(self, new_version, download_url)
+    def show_update_dialog(self, new_version, download_url, note=""):
+        dlg = UpdateDialog(self, new_version, download_url, note)
         if dlg.exec():
             # User clicked Update Now, open URL
             import webbrowser
