@@ -36,7 +36,8 @@ class UpdateChecker(QThread):
             data = response.json()
             remote_version = data.get("version")
             download_url = data.get("downloadUrl")
-            note = data.get("note", "")
+            # Support 'note' or 'update' keys for the message
+            note = data.get("note") or data.get("update") or ""
             
             if remote_version:
                 # Validate URL extension against platform

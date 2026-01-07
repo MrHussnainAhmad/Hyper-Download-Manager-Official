@@ -906,10 +906,15 @@ class UpdateDialog(BaseDialog):
         layout.addLayout(header)
         
         # Release Note / Description
+        if note:
+            note_header = QLabel("Update Note:")
+            note_header.setStyleSheet(f"font-family: 'Segoe UI'; font-size: 13px; font-weight: 700; color: {t['text_primary']}; margin-top: 10px;")
+            layout.addWidget(note_header)
+            
         note_text = note if note else "Update to get the latest features and bug fixes."
         note_label = QLabel(note_text)
         note_label.setWordWrap(True)
-        note_label.setStyleSheet(f"font-family: 'Segoe UI'; font-size: 13px; color: {t['text_muted']}; margin-top: 5px;")
+        note_label.setStyleSheet(f"font-family: 'Segoe UI'; font-size: 13px; color: {t['text_muted']}; margin-top: {2 if note else 5}px;")
         layout.addWidget(note_label)
         
         layout.addStretch()
