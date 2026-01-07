@@ -2,7 +2,6 @@ import requests
 from PySide6.QtCore import QThread, Signal, QObject
 import os
 import platform # Added at module level
-import re
 
 class UpdateChecker(QThread):
     update_available = Signal(str, str, str) # version, download_url, note
@@ -51,10 +50,6 @@ class UpdateChecker(QThread):
                 
                 if valid_update:
                     if self._is_newer(remote_version):
-                        # Try to fetch note from GitHub if missing
-                        if not note and download_url and "github.com" in download_url:
-                            note = self._fetch_github_note(download_url)
-                            
                         self.update_available.emit(remote_version, download_url, note)
                     else:
                         self.up_to_date.emit()
@@ -71,20 +66,6 @@ class UpdateChecker(QThread):
         except Exception as e:
             self.error_occurred.emit(str(e))
             
-    def _fetch_github_note(self, download_url):
-        try:
-            # Extract owner, repo, tag from: https://github.com/OWNER/REPO/releases/download/TAG/filename
-            match = re.search(r"github\.com/([^/]+)/([^/]+)/releases/download/([^/]+)/", download_url)
-            if match:
-                owner, repo, tag = match.groups()
-                api_url = f"https://api.github.com/repos/{owner}/{repo}/releases/tags/{tag}"
-                resp = requests.get(api_url, timeout=5)
-                if resp.status_code == 200:
-                    return resp.json().get("body", "")
-        except:
-            pass
-        return ""
-
     def _is_newer(self, remote_ver):
         try:
             v1_parts = [int(x) for x in remote_ver.split('.')]
