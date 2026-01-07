@@ -907,7 +907,7 @@ class UpdateDialog(BaseDialog):
         
         # Release Note / Description
         if note:
-            note_header = QLabel("Update Note:")
+            note_header = QLabel("Update:")
             note_header.setStyleSheet(f"font-family: 'Segoe UI'; font-size: 13px; font-weight: 700; color: {t['text_primary']}; margin-top: 10px;")
             layout.addWidget(note_header)
             
