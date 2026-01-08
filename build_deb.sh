@@ -32,6 +32,10 @@ cp -r ./* "$TEMP_BUILD_DIR/"
 
 cd "$TEMP_BUILD_DIR"
 
+# Update yt-dlp to latest version before building
+echo "Updating yt-dlp to latest version..."
+"$VENV_PYTHON" -m pip install --upgrade yt-dlp
+
 # 2. Build executable with PyInstaller
 echo "Building executable..."
 # Build with explicit arguments to ensure version.txt and assets are included

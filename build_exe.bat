@@ -10,6 +10,9 @@ python -m pip install pypiwin32
 python -m pip install --upgrade pyinstaller
 python -m pip install Pillow
 
+echo Updating yt-dlp to latest version...
+python -m pip install --upgrade yt-dlp
+
 echo Building Hyper Download Manager (Windowed)...
 python -m PyInstaller --noconfirm --onedir --windowed --name "HyperDownloadManager" --icon "icon.ico" --add-data "ui;ui" --add-data "core;core" --add-data "utils;utils" --add-data "extension;extension" --add-data "LICENSE.txt;." --add-data "icon.png;." --add-data "icon.ico;." --add-data "version.txt;." main.py
 
