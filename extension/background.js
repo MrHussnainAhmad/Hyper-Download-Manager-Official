@@ -52,10 +52,15 @@ function shouldHandleDownload(downloadItem) {
   }
 
   // Check if it's an image
-  const isImage = /\.(png|jpg|jpeg|gif|webp|bmp|svg|ico|tiff)$/i.test(downloadItem.filename || "");
+  const imageExts = /\.(png|jpg|jpeg|gif|webp|bmp|svg|ico|tiff|avif|heic|heif)$/i;
+  const isImageFile = imageExts.test(downloadItem.filename || "");
   const isImageMime = (downloadItem.mime && downloadItem.mime.startsWith("image/"));
 
-  if (isImage || isImageMime) {
+  // Check URL as fallback (in case filename is empty or misleading)
+  const cleanUrl = downloadItem.url.split('?')[0];
+  const isImageUrl = imageExts.test(cleanUrl);
+
+  if (isImageFile || isImageMime || isImageUrl) {
     console.log("Ignoring image download:", downloadItem.url);
     return false;
   }

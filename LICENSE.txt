@@ -1,29 +1,1389 @@
-END USER LICENSE AGREEMENT (EULA)
+🇵🇸 WE STAND WITH PALESTINE, FUCK ISRAEL 🇵🇸
+This software and its developer stand in solidarity with the people of Palestine. We support human rights, justice, and freedom for all.
 
-IMPORTANT: PLEASE READ THIS AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THIS SOFTWARE.
+# END USER LICENSE AGREEMENT (EULA)
 
-1.  AGREEMENT
-    This End User License Agreement ("Agreement") is a legal agreement between You ("User") and Hussnain Ahmad ("Author") for the software product Hyper Download Manager ("Software"). By installing or using the Software, You agree to be bound by the terms of this Agreement.
+## HYPER DOWNLOAD MANAGER
 
-2.  GRANT OF LICENSE
-    The Author grants You a revocable, non-exclusive, non-transferable, limited license to download, install, and use the Software solely for your personal, non-commercial purposes, strictly in accordance with the terms of this Agreement.
+**Version 1.0 | Last Updated: [DATE] | Effective Date: [DATE]**
 
-3.  INTELLECTUAL PROPERTY RIGHTS
-    The Software, including its code, documentation, appearance, structure, and organization, is the exclusive proprietary intellectual property of the Author. All title and intellectual property rights in and to the Software are owned by the Author. The Software is protected by copyright laws and international treaty provisions.
+---
 
-4.  RESTRICTIONS ON USE
-    You shall not:
-    a) Modify, adapt, translate, reverse engineer, decompile, disassemble, or create derivative works based on the Software.
-    b) Rent, lease, lend, sell, sublicense, assign, distribute, publish, transfer, or otherwise make available the Software to any third party for any reason.
-    c) Remove, alter, or obscure any proprietary notice (including copyright and trademark notices) of the Author or its affiliates.
+## IMPORTANT NOTICE
 
-5.  TERMINATION
-    This Agreement is effective until terminated. Your rights under this Agreement will terminate immediately and automatically without notice from the Author if You fail to comply with any of the terms and conditions of this Agreement. Upon termination, You must cease all use of the Software and delete all copies of the Software from your possession or control.
+**PLEASE READ THIS END USER LICENSE AGREEMENT ("AGREEMENT" OR "EULA") CAREFULLY BEFORE DOWNLOADING, INSTALLING, ACCESSING, OR USING THE HYPER DOWNLOAD MANAGER SOFTWARE APPLICATION. THIS AGREEMENT CONSTITUTES A LEGALLY BINDING CONTRACT BETWEEN YOU AND THE AUTHOR.**
 
-6.  DISCLAIMER OF WARRANTY
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+**BY DOWNLOADING, INSTALLING, COPYING, ACCESSING, OR USING THIS SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY ALL THE TERMS AND CONDITIONS SET FORTH IN THIS AGREEMENT. IF YOU DO NOT AGREE TO ALL THE TERMS AND CONDITIONS OF THIS AGREEMENT, DO NOT DOWNLOAD, INSTALL, ACCESS, OR USE THE SOFTWARE. YOU MUST IMMEDIATELY DELETE ANY COPIES OF THE SOFTWARE IN YOUR POSSESSION OR CONTROL.**
 
-7.  GOVERNING LAW
-    This Agreement shall be governed by and construed in accordance with the laws applicable in the jurisdiction of the Author.
+**IF YOU ARE ENTERING INTO THIS AGREEMENT ON BEHALF OF A COMPANY, ORGANIZATION, OR OTHER LEGAL ENTITY, YOU REPRESENT AND WARRANT THAT YOU HAVE THE AUTHORITY TO BIND SUCH ENTITY AND ITS AFFILIATES TO THESE TERMS AND CONDITIONS. IF YOU DO NOT HAVE SUCH AUTHORITY, OR IF YOU DO NOT AGREE WITH THESE TERMS AND CONDITIONS, YOU MUST NOT ACCEPT THIS AGREEMENT AND MAY NOT USE THE SOFTWARE.**
 
-Copyright (c) 2026 Hussnain Ahmad. All rights reserved.
+**THIS SOFTWARE IS DEVELOPED, MAINTAINED, AND DISTRIBUTED BY A SOLE INDEPENDENT DEVELOPER AND IS NOT A REGISTERED COMMERCIAL ENTITY OR INCORPORATED COMPANY. BY ACCEPTING THIS AGREEMENT, YOU ACKNOWLEDGE AND ACCEPT THIS FACT AND ALL ASSOCIATED IMPLICATIONS.**
+
+---
+
+## TABLE OF CONTENTS
+
+1. Definitions and Interpretation
+2. About the Author and Software
+3. Grant of License
+4. License Restrictions and Prohibited Uses
+5. Intellectual Property Rights
+6. Reservation of Rights
+7. Software Pricing, Monetization, and Payment Terms
+8. Advertisements and Promotional Content
+9. Software Updates, Modifications, and Discontinuation
+10. User Obligations and Responsibilities
+11. User Conduct and Acceptable Use Policy
+12. Data Collection, Privacy, and Security
+13. Third-Party Services, Content, and Links
+14. Technical Requirements and Compatibility
+15. Support and Maintenance
+16. Feedback and Suggestions
+17. Disclaimer of Warranties
+18. Limitation of Liability
+19. Indemnification
+20. Term and Termination
+21. Effects of Termination
+22. Export Compliance
+23. Governing Law and Jurisdiction
+24. Dispute Resolution
+25. Class Action Waiver
+26. Severability
+27. Entire Agreement
+28. Amendment and Modification
+29. Waiver
+30. Assignment and Transfer
+31. Force Majeure
+32. Notices and Communications
+33. Language
+34. Survival
+35. Acknowledgment and Acceptance
+36. Contact Information
+
+---
+
+## 1. DEFINITIONS AND INTERPRETATION
+
+### 1.1 Definitions
+
+For the purposes of this Agreement, the following terms shall have the meanings ascribed to them below:
+
+**"Advertisement" or "Ad"** means any form of promotional content, commercial messages, sponsored content, banners, pop-ups, interstitial ads, video ads, native ads, or any other form of advertising that may be displayed within, through, or in connection with the Software.
+
+**"Affiliate"** means any entity that directly or indirectly controls, is controlled by, or is under common control with the Author, where "control" means the ownership of more than fifty percent (50%) of the voting securities or equivalent voting interests of such entity.
+
+**"Agreement" or "EULA"** means this End User License Agreement, including all schedules, appendices, exhibits, and amendments hereto.
+
+**"Author," "Developer," "Owner," "Creator," "We," "Us," or "Our"** means Hussnain Ahmad, an individual software developer and sole proprietor operating independently, and includes any successors, assigns, or authorized representatives.
+
+**"Confidential Information"** means any non-public information regarding the Software, including but not limited to source code, algorithms, trade secrets, technical data, know-how, business plans, and any other proprietary information.
+
+**"Content"** means any text, graphics, images, music, software, audio, video, information, data, or other materials.
+
+**"Derivative Work"** means any work that is based upon or derived from the Software, including but not limited to any modification, enhancement, improvement, translation, adaptation, abridgment, condensation, expansion, or any other form in which the Software may be recast, transformed, or adapted.
+
+**"Device"** means any personal computer, laptop, tablet, smartphone, or other electronic device capable of running the Software.
+
+**"Documentation"** means any user manuals, technical manuals, training materials, specifications, help files, and other documentation provided with or relating to the Software.
+
+**"Effective Date"** means the date on which You first download, install, access, or use the Software, whichever occurs first.
+
+**"Feedback"** means any suggestions, ideas, enhancement requests, recommendations, comments, or other feedback provided by You regarding the Software.
+
+**"Free Version"** means the version of the Software that is provided without charge, which may have limited features, functionality, or capabilities compared to any paid version.
+
+**"Intellectual Property Rights"** means all patents, copyrights, trademarks, trade names, service marks, trade secrets, know-how, moral rights, and any other intellectual property rights recognized in any jurisdiction worldwide.
+
+**"License"** means the limited, revocable, non-exclusive, non-transferable right to use the Software as granted under this Agreement.
+
+**"Paid Version" or "Premium Version"** means any version of the Software that requires payment of fees, subscriptions, or other charges to access certain features, functionality, or capabilities.
+
+**"Pakistan"** means the Islamic Republic of Pakistan.
+
+**"Personal Data"** means any information relating to an identified or identifiable natural person.
+
+**"Software"** means the Hyper Download Manager application, including all associated files, libraries, modules, components, updates, upgrades, patches, bug fixes, enhancements, modifications, new versions, documentation, and any related materials provided by the Author.
+
+**"Subscription"** means any recurring payment arrangement for continued access to the Software or certain features thereof.
+
+**"Term"** means the period during which this Agreement remains in effect.
+
+**"Third-Party Content"** means any content, materials, services, or software provided by third parties that may be accessed through or in connection with the Software.
+
+**"Third-Party Services"** means any services, websites, applications, or platforms operated by third parties that may integrate with or be accessed through the Software.
+
+**"Update"** means any patch, bug fix, security update, enhancement, modification, or new version of the Software that the Author may release from time to time.
+
+**"User," "You," or "Your"** means the individual person, company, organization, or other legal entity that downloads, installs, accesses, or uses the Software.
+
+**"User Data"** means any data, content, information, or materials that You input, upload, store, or transmit through the Software.
+
+### 1.2 Interpretation
+
+In this Agreement, unless the context otherwise requires:
+
+a) Words in the singular include the plural and vice versa.
+
+b) A reference to one gender includes a reference to all other genders.
+
+c) A reference to a statute, regulation, or other law includes all amendments, consolidations, replacements, or re-enactments.
+
+d) Headings are for convenience only and shall not affect the interpretation of this Agreement.
+
+e) The words "include," "includes," and "including" shall be deemed to be followed by the words "without limitation."
+
+f) The words "herein," "hereof," "hereunder," and similar words refer to this Agreement as a whole and not to any particular provision.
+
+g) Any reference to "days" means calendar days unless otherwise specified.
+
+h) Any reference to "written" or "in writing" includes electronic communications.
+
+---
+
+## 2. ABOUT THE AUTHOR AND SOFTWARE
+
+### 2.1 Independent Developer Status
+
+You hereby acknowledge and agree that:
+
+a) The Software is developed, maintained, owned, and distributed solely by Hussnain Ahmad, an independent individual software developer operating as a sole proprietor.
+
+b) The Author is NOT a registered company, corporation, limited liability company, partnership, or any other form of registered business entity or incorporated organization.
+
+c) The Author operates as an individual developer without formal business registration, commercial licensing, or corporate structure.
+
+d) The Software is a personal project developed independently by the Author and is not backed by, affiliated with, or endorsed by any company, organization, institution, or third party.
+
+e) All rights, obligations, liabilities, and responsibilities under this Agreement are personal to the Author as an individual.
+
+f) The Author reserves the right to, at any time in the future, register a business entity, incorporate, or otherwise formalize the business structure without prior notice to You, and this Agreement shall remain in full force and effect.
+
+### 2.2 Nature of the Software
+
+a) The Software is a download manager application designed to assist users in downloading files from the internet.
+
+b) The Software is provided on an "as-available" basis and may be subject to modifications, updates, discontinuation, or changes at any time.
+
+c) The Author makes no representations or warranties regarding the continuous availability, functionality, or performance of the Software.
+
+### 2.3 No Professional Advice
+
+The Software does not provide professional, legal, financial, or technical advice. Any use of the Software is at Your own risk and discretion.
+
+---
+
+## 3. GRANT OF LICENSE
+
+### 3.1 License Grant
+
+Subject to Your strict compliance with all terms and conditions of this Agreement, the Author hereby grants You a limited, revocable, non-exclusive, non-transferable, non-sublicensable, personal license to:
+
+a) Download one (1) copy of the Software onto a Device owned or controlled by You.
+
+b) Install the Software on such Device.
+
+c) Use the Software solely for Your personal, non-commercial purposes in accordance with this Agreement and any applicable Documentation.
+
+### 3.2 Scope of License
+
+a) This License is granted solely for the Software in object code form. You are not granted any rights to the source code of the Software.
+
+b) The License granted herein is limited to the intellectual property rights of the Author in the Software and does not include any rights to other patents, trademarks, or intellectual property rights.
+
+c) This License does not grant You any rights to use the Author's name, logo, trademarks, or service marks.
+
+d) The License is personal to You and cannot be shared with, transferred to, or used for the benefit of any third party.
+
+### 3.3 License Limitations
+
+a) The License granted herein applies only to the current version of the Software unless otherwise specified by the Author.
+
+b) The Author reserves the right to modify, limit, expand, or revoke this License at any time, with or without notice, at the Author's sole discretion.
+
+c) The Author may, at any time, convert the Software from a free product to a paid product, and continued use may require payment of applicable fees.
+
+d) The Author may introduce different license tiers, subscription models, or pricing structures at any time.
+
+### 3.4 Number of Installations
+
+Unless otherwise authorized in writing by the Author, You may install the Software on a maximum of three (3) Devices owned or controlled by You at any given time. All installations must be for Your personal use only.
+
+### 3.5 Commercial Use
+
+a) This License expressly prohibits the use of the Software for any commercial purpose whatsoever.
+
+b) Commercial use includes, but is not limited to, using the Software in a business environment, for business purposes, for profit-generating activities, or in connection with any commercial enterprise.
+
+c) If You wish to use the Software for commercial purposes, You must contact the Author to obtain a separate commercial license and agree to applicable fees and terms.
+
+---
+
+## 4. LICENSE RESTRICTIONS AND PROHIBITED USES
+
+### 4.1 General Restrictions
+
+You expressly agree that You shall NOT, and shall not permit, enable, or assist any third party to:
+
+a) Copy, reproduce, duplicate, or replicate the Software except as expressly permitted under this Agreement.
+
+b) Modify, adapt, alter, translate, or create any Derivative Works based on the Software.
+
+c) Reverse engineer, decompile, disassemble, decode, decrypt, or otherwise attempt to derive the source code, underlying ideas, algorithms, structure, or organization of the Software, in whole or in part.
+
+d) Bypass, circumvent, disable, or interfere with any security features, access controls, use limitations, or technological protection measures in the Software.
+
+e) Remove, alter, obscure, deface, or tamper with any copyright notices, trademarks, logos, proprietary legends, or other proprietary markings on or in the Software.
+
+f) Rent, lease, lend, sell, resell, sublicense, assign, distribute, publish, transfer, or otherwise make the Software available to any third party.
+
+g) Use the Software for any time-sharing, outsourcing, service bureau, hosting, or similar purposes for the benefit of any third party.
+
+h) Use the Software in any manner that infringes, misappropriates, or violates any Intellectual Property Rights or other rights of any third party.
+
+i) Use the Software for any purpose that is illegal, unlawful, fraudulent, harmful, or in connection with any illegal, unlawful, fraudulent, or harmful activity.
+
+j) Use the Software to transmit, distribute, or store any material that is defamatory, obscene, pornographic, threatening, harassing, abusive, or otherwise objectionable.
+
+k) Use the Software to transmit any viruses, worms, malware, ransomware, spyware, or other malicious code.
+
+l) Use the Software to interfere with, disrupt, damage, or gain unauthorized access to any computer systems, servers, networks, or data.
+
+m) Use the Software in any manner that could damage, disable, overburden, or impair any server, network, or system.
+
+n) Use the Software to harvest, collect, or gather user data, personal information, or any other information without proper authorization.
+
+o) Use the Software to send unsolicited communications, spam, or bulk messages.
+
+p) Use the Software to impersonate any person or entity or misrepresent Your affiliation with any person or entity.
+
+q) Use the Software for any purpose that violates any applicable law, regulation, or governmental order in any jurisdiction.
+
+r) Use the Software in any manner that violates the terms of service or acceptable use policies of any third-party services accessed through the Software.
+
+s) Benchmark, test, or analyze the Software for competitive purposes without the Author's prior written consent.
+
+t) Publicly disseminate performance information or analysis relating to the Software without the Author's prior written consent.
+
+u) Use the Software in a manner that could bring the Author into disrepute or harm the Author's reputation.
+
+v) Use any automated means, including bots, scripts, or crawlers, to access or interact with the Software except as expressly permitted.
+
+w) Attempt to gain unauthorized access to any portion of the Software, other accounts, computer systems, or networks connected to the Software.
+
+x) Use the Software for cryptocurrency mining, password cracking, or any other resource-intensive or potentially harmful activities.
+
+y) Interfere with any other user's use and enjoyment of the Software.
+
+z) Engage in any activity that could reasonably be expected to interfere with or disrupt the operation of the Software.
+
+### 4.2 Download Restrictions
+
+You acknowledge and agree that:
+
+a) The Software is a tool to assist with downloading files from the internet, but You are solely responsible for ensuring that Your downloads comply with all applicable laws and third-party rights.
+
+b) You shall not use the Software to download any content that You are not legally authorized to download, including but not limited to copyrighted materials, pirated content, or content protected by intellectual property rights.
+
+c) You shall not use the Software to circumvent, bypass, or defeat any digital rights management (DRM), copy protection, access control, or other technological protection measures.
+
+d) You shall not use the Software to download content from websites or services where such downloading is prohibited by the terms of service, user agreements, or applicable law.
+
+e) The Author is not responsible for any content that You download using the Software. You assume full responsibility and liability for all downloads.
+
+f) The Author does not host, store, control, or have any responsibility for any content downloaded through the Software.
+
+### 4.3 Reverse Engineering Exception
+
+Notwithstanding the restrictions set forth above, You may decompile or reverse engineer the Software only to the extent that such activity is expressly permitted by applicable law, and then only after You have first requested the necessary information from the Author in writing and the Author has failed to provide such information within a reasonable time.
+
+---
+
+## 5. INTELLECTUAL PROPERTY RIGHTS
+
+### 5.1 Ownership
+
+a) The Software and all copies thereof are proprietary to the Author and title thereto remains exclusively with the Author.
+
+b) All rights in and to the Software, including but not limited to all Intellectual Property Rights, are and shall remain the exclusive property of the Author.
+
+c) The Software is protected by copyright laws of Pakistan, international copyright treaties, and other intellectual property laws and treaties.
+
+d) This Agreement does not grant You any ownership interest in or to the Software, but only a limited right of use revocable in accordance with the terms of this Agreement.
+
+### 5.2 Copyright
+
+a) The Software, including all code, content, design, graphics, user interfaces, visual interfaces, photographs, trademarks, logos, sounds, music, artwork, algorithms, Documentation, and all other elements of the Software, is protected by copyright.
+
+b) Copyright © 2024-2026 Hussnain Ahmad. All rights reserved.
+
+c) Any unauthorized reproduction, modification, distribution, or other use of the Software is strictly prohibited and constitutes an infringement of the Author's copyright.
+
+### 5.3 Trademarks
+
+a) "Hyper Download Manager," "HDM," and any associated logos, product names, service names, slogans, and other identifiers are trademarks or service marks of the Author.
+
+b) You may not use any of the Author's trademarks or service marks without the Author's prior written permission.
+
+c) All other trademarks, service marks, product names, and company names mentioned in the Software are the property of their respective owners.
+
+### 5.4 Trade Secrets
+
+a) The Software contains valuable trade secrets and confidential information of the Author.
+
+b) You agree to maintain the confidentiality of any Confidential Information and not to disclose such information to any third party.
+
+c) You acknowledge that any unauthorized use or disclosure of the Author's trade secrets would cause irreparable harm to the Author.
+
+### 5.5 No Implied Rights
+
+Except for the limited License expressly granted herein, no other license or right is granted to You, whether by implication, estoppel, or otherwise, with respect to the Software or any Intellectual Property Rights therein.
+
+---
+
+## 6. RESERVATION OF RIGHTS
+
+### 6.1 All Rights Reserved
+
+The Author expressly reserves all rights not expressly granted to You in this Agreement. Without limiting the foregoing, the Author reserves the right to:
+
+a) Modify, update, upgrade, enhance, or discontinue the Software at any time without notice.
+
+b) Change, modify, add, or remove features and functionality of the Software at any time.
+
+c) Change the terms and conditions of this Agreement at any time.
+
+d) Change the pricing, licensing model, or monetization strategy of the Software at any time.
+
+e) Limit, suspend, or terminate Your access to the Software at any time for any reason.
+
+f) Grant or deny permission for any use of the Software not expressly addressed in this Agreement.
+
+g) Take any action with respect to the Software that the Author deems necessary or appropriate in the Author's sole discretion.
+
+### 6.2 No Obligation
+
+The Author has no obligation to:
+
+a) Provide any updates, upgrades, enhancements, or new versions of the Software.
+
+b) Provide any support, maintenance, or technical assistance for the Software.
+
+c) Fix any bugs, errors, defects, or other issues in the Software.
+
+d) Continue to offer the Software or any features thereof.
+
+e) Maintain any particular level of performance, availability, or functionality.
+
+---
+
+## 7. SOFTWARE PRICING, MONETIZATION, AND PAYMENT TERMS
+
+### 7.1 Current Status
+
+**IMPORTANT NOTICE REGARDING PRICING AND MONETIZATION:**
+
+a) As of the Effective Date of this Agreement, the Software is provided FREE OF CHARGE for personal, non-commercial use.
+
+b) You acknowledge and agree that the free status of the Software is temporary and may be changed by the Author at any time, with or without prior notice.
+
+c) The Author provides the Software free of charge at the Author's sole discretion, and this does not create any obligation to continue providing the Software free of charge in the future.
+
+### 7.2 Future Pricing Changes
+
+You expressly acknowledge, understand, and agree that:
+
+a) The Author reserves the absolute and unconditional right to convert the Software from a free product to a paid product at any time, without prior notice, at the Author's sole discretion.
+
+b) The Author may introduce subscription fees, one-time purchase fees, in-app purchases, licensing fees, or any other form of payment for access to the Software or any features thereof.
+
+c) The Author may introduce different pricing tiers, plans, or packages with varying features, functionality, and price points.
+
+d) The Author may introduce a "freemium" model where basic features are free but advanced features require payment.
+
+e) The Author may limit, reduce, or remove features from the free version at any time.
+
+f) Any and all pricing decisions, including the amount of fees, payment terms, billing frequency, and payment methods, shall be at the Author's sole and absolute discretion.
+
+g) The Author may increase prices at any time, with or without prior notice, and You agree to pay such increased prices if You choose to continue using the Software.
+
+h) Price changes may apply to existing users as well as new users, and the Author is not obligated to grandfather existing users at previous prices.
+
+i) The Author is not obligated to provide any refunds, credits, or compensation in connection with any pricing changes.
+
+j) By continuing to use the Software after any pricing changes take effect, You agree to be bound by the new pricing terms.
+
+### 7.3 Payment Terms
+
+If and when the Software becomes a paid product:
+
+a) You agree to pay all applicable fees and charges associated with Your use of the Software.
+
+b) All payments shall be made in the currency specified by the Author through payment methods accepted by the Author.
+
+c) All fees are non-refundable except as expressly stated otherwise by the Author or required by applicable law.
+
+d) You are responsible for all taxes, duties, levies, and other governmental charges associated with Your purchase.
+
+e) Failure to pay required fees may result in suspension or termination of Your access to the Software.
+
+f) The Author reserves the right to use third-party payment processors, and Your use of such processors is subject to their terms of service.
+
+g) You authorize the Author or its payment processors to charge Your designated payment method for all applicable fees.
+
+h) For subscription-based pricing, You authorize recurring charges and agree that subscriptions will automatically renew unless cancelled.
+
+### 7.4 No Price Guarantees
+
+a) The Author makes no guarantees regarding future pricing of the Software.
+
+b) Any current prices, discounts, promotions, or offers are subject to change at any time.
+
+c) The Author is not responsible for any financial loss or hardship resulting from pricing changes.
+
+---
+
+## 8. ADVERTISEMENTS AND PROMOTIONAL CONTENT
+
+### 8.1 Current Status
+
+**IMPORTANT NOTICE REGARDING ADVERTISEMENTS:**
+
+a) As of the Effective Date of this Agreement, the Software is provided WITHOUT ADVERTISEMENTS (AD-FREE).
+
+b) You acknowledge and agree that the ad-free status of the Software is temporary and may be changed by the Author at any time, with or without prior notice.
+
+c) The Author provides the Software without advertisements at the Author's sole discretion, and this does not create any obligation to continue providing an ad-free experience in the future.
+
+### 8.2 Future Advertisement Implementation
+
+You expressly acknowledge, understand, and agree that:
+
+a) The Author reserves the absolute and unconditional right to introduce, display, or include advertisements within, through, or in connection with the Software at any time, without prior notice, at the Author's sole discretion.
+
+b) Advertisements may be displayed in various formats, including but not limited to:
+   - Banner advertisements
+   - Interstitial advertisements
+   - Pop-up advertisements
+   - Video advertisements
+   - Native advertisements
+   - Sponsored content
+   - Push notifications
+   - Email communications
+   - In-app promotions
+   - Any other form of advertising
+
+c) The frequency, placement, timing, duration, and nature of advertisements shall be determined by the Author in the Author's sole discretion.
+
+d) Advertisements may increase in frequency or prominence over time at the Author's sole discretion.
+
+e) The Author may use third-party advertising networks and services to deliver advertisements.
+
+f) Advertisements may be targeted or personalized based on Your usage patterns, preferences, location, or other data, subject to applicable privacy laws.
+
+g) You agree not to use any ad-blocking software, extensions, or techniques to circumvent or block advertisements in the Software.
+
+h) The Author is not responsible for the content, accuracy, legality, or any other aspect of third-party advertisements displayed in the Software.
+
+i) Your interaction with any advertiser is solely between You and such advertiser, and the Author is not responsible for any loss or damage resulting from such interaction.
+
+j) The Author may offer an ad-free version of the Software for a fee, and the terms of such offering shall be at the Author's sole discretion.
+
+### 8.3 Consent to Advertisements
+
+By using the Software, You consent to receive advertisements as described in this Section and agree that such advertisements do not constitute a violation of this Agreement or any rights You may have.
+
+### 8.4 Third-Party Advertising
+
+a) Third-party advertising networks may collect and use certain information about Your use of the Software for advertising purposes.
+
+b) The Author is not responsible for the privacy practices of third-party advertising networks.
+
+c) Your use of the Software constitutes consent to such data collection and use for advertising purposes, subject to applicable law.
+
+---
+
+## 9. SOFTWARE UPDATES, MODIFICATIONS, AND DISCONTINUATION
+
+### 9.1 Updates
+
+a) The Author may, from time to time, in the Author's sole discretion, develop and provide updates for the Software.
+
+b) Updates may include bug fixes, security patches, new features, feature modifications, feature removals, or other changes.
+
+c) You acknowledge that updates may be required for the Software to continue functioning properly.
+
+d) Updates may be provided automatically without notice or may require Your action to install.
+
+e) You agree to install updates as required by the Author.
+
+f) Failure to install updates may result in reduced functionality, security vulnerabilities, or termination of Your License.
+
+g) The Author has no obligation to provide any updates and may cease providing updates at any time.
+
+h) Updates are subject to this Agreement unless accompanied by a separate license agreement.
+
+### 9.2 Modifications
+
+a) The Author reserves the right to modify, change, add, or remove features and functionality of the Software at any time, with or without notice.
+
+b) Modifications may include changes to the user interface, functionality, performance, or other aspects of the Software.
+
+c) The Author is not obligated to maintain any particular features or functionality.
+
+d) You accept that features You rely upon may be modified or removed at any time.
+
+### 9.3 Discontinuation
+
+a) The Author reserves the right to discontinue the Software, temporarily or permanently, at any time, with or without notice, at the Author's sole discretion.
+
+b) The Author may discontinue support for certain operating systems, devices, or platforms at any time.
+
+c) In the event of discontinuation, the Author has no obligation to provide any alternative, refund, or compensation.
+
+d) The Author is not liable for any loss, damage, or inconvenience resulting from discontinuation of the Software.
+
+### 9.4 Automatic Updates
+
+a) The Software may include functionality that automatically checks for and downloads updates.
+
+b) By using the Software, You consent to automatic update checks and downloads.
+
+c) You may be able to disable automatic updates in the Software settings, but doing so may affect functionality and security.
+
+---
+
+## 10. USER OBLIGATIONS AND RESPONSIBILITIES
+
+### 10.1 General Obligations
+
+You agree and undertake to:
+
+a) Comply with all terms and conditions of this Agreement at all times.
+
+b) Comply with all applicable laws, rules, and regulations in connection with Your use of the Software.
+
+c) Use the Software only for lawful purposes and in a lawful manner.
+
+d) Ensure that Your use of the Software does not infringe upon or violate the rights of any third party.
+
+e) Provide accurate, current, and complete information when required by the Software.
+
+f) Maintain the security and confidentiality of any credentials, accounts, or access mechanisms associated with the Software.
+
+g) Promptly notify the Author of any unauthorized use of Your account or any other security breach.
+
+h) Take all reasonable steps to prevent unauthorized access to or use of the Software.
+
+i) Accept responsibility for all activities that occur under Your account or on Your devices.
+
+j) Comply with any usage guidelines, policies, or rules published by the Author from time to time.
+
+### 10.2 Technical Requirements
+
+You are solely responsible for:
+
+a) Providing and maintaining all hardware, software, and network connections necessary to use the Software.
+
+b) Ensuring that Your devices meet the minimum system requirements for the Software.
+
+c) All internet service provider fees, data charges, and other costs associated with Your use of the Software.
+
+d) Implementing and maintaining appropriate security measures on Your devices.
+
+e) Backing up Your data and protecting against data loss.
+
+### 10.3 Content Responsibility
+
+a) You are solely responsible for all content that You download, upload, or transmit using the Software.
+
+b) You represent and warrant that You have all necessary rights, licenses, and permissions to use and download any content.
+
+c) You agree not to use the Software to download, distribute, or transmit any content that violates any law or third-party rights.
+
+---
+
+## 11. USER CONDUCT AND ACCEPTABLE USE POLICY
+
+### 11.1 Acceptable Use
+
+You agree to use the Software in accordance with this Acceptable Use Policy and all applicable laws and regulations.
+
+### 11.2 Prohibited Conduct
+
+In addition to the restrictions set forth elsewhere in this Agreement, You agree not to:
+
+a) Use the Software for any purpose that is harmful, threatening, abusive, harassing, tortious, defamatory, vulgar, obscene, libelous, invasive of another's privacy, hateful, or racially, ethnically, or otherwise objectionable.
+
+b) Use the Software in any manner that could damage, disable, overburden, or impair the Software or interfere with any other party's use of the Software.
+
+c) Use the Software to transmit any content that You do not have a right to transmit under any law or contractual or fiduciary relationship.
+
+d) Use the Software to impersonate any person or entity or falsely state or otherwise misrepresent Your affiliation with a person or entity.
+
+e) Use the Software for any unauthorized purpose or in violation of any applicable law or regulation.
+
+f) Use the Software in a manner that could subject the Author to liability or harm the Author's reputation.
+
+### 11.3 Monitoring and Enforcement
+
+a) The Author reserves the right, but has no obligation, to monitor Your use of the Software.
+
+b) The Author may investigate any suspected violation of this Agreement.
+
+c) The Author may take any action deemed appropriate, including termination of Your License, for any violation or suspected violation.
+
+---
+
+## 12. DATA COLLECTION, PRIVACY, AND SECURITY
+
+### 12.1 Data Collection
+
+a) The Software may collect certain data about You and Your use of the Software.
+
+b) Types of data that may be collected include, but are not limited to:
+   - Device information (hardware, operating system, device identifiers)
+   - Usage data (features used, frequency of use, performance data)
+   - Log data (error logs, crash reports, diagnostic data)
+   - Network information (IP address, network type)
+   - Download history and preferences
+   - Any other data necessary for the operation of the Software
+
+c) You consent to the collection, processing, and use of such data as described in this Agreement.
+
+### 12.2 Use of Data
+
+The Author may use collected data for the following purposes:
+
+a) To provide, maintain, and improve the Software.
+
+b) To develop new features and functionality.
+
+c) To diagnose and fix bugs, errors, and other issues.
+
+d) To analyze usage patterns and trends.
+
+e) To personalize Your experience.
+
+f) To display targeted advertisements (if applicable).
+
+g) To communicate with You about the Software.
+
+h) To enforce this Agreement and protect the Author's rights.
+
+i) For any other purpose disclosed at the time of collection or with Your consent.
+
+### 12.3 Privacy Policy
+
+a) The Author may publish a separate Privacy Policy detailing data collection, use, and protection practices.
+
+b) In the absence of a separate Privacy Policy, this Section governs data collection and use.
+
+c) Your use of the Software constitutes acceptance of the data practices described herein.
+
+### 12.4 Data Security
+
+a) The Author implements reasonable security measures to protect collected data.
+
+b) However, no method of transmission or storage is completely secure, and the Author cannot guarantee absolute security.
+
+c) You acknowledge the inherent risks of transmitting data over the internet and use the Software at Your own risk.
+
+d) The Author is not liable for any unauthorized access to, disclosure of, or loss of Your data.
+
+### 12.5 Data Retention
+
+The Author may retain collected data for as long as necessary to fulfill the purposes described herein or as required by law.
+
+### 12.6 Third-Party Data Sharing
+
+a) The Author may share data with third parties for purposes such as advertising, analytics, and service provision.
+
+b) The Author is not responsible for the privacy practices of third parties.
+
+---
+
+## 13. THIRD-PARTY SERVICES, CONTENT, AND LINKS
+
+### 13.1 Third-Party Services
+
+a) The Software may integrate with, interface with, or provide access to third-party services, websites, or platforms.
+
+b) Your use of third-party services is subject to the terms of service and privacy policies of those third parties.
+
+c) The Author is not responsible for the availability, content, accuracy, or practices of third-party services.
+
+d) The Author does not endorse any third-party services and is not liable for any loss or damage resulting from Your use of such services.
+
+### 13.2 Third-Party Content
+
+a) Content downloaded through the Software is provided by third parties and not by the Author.
+
+b) The Author does not control, host, or take responsibility for any third-party content.
+
+c) You are solely responsible for evaluating and bearing all risks associated with third-party content.
+
+d) The Author is not liable for any claims arising from third-party content.
+
+### 13.3 Links
+
+a) The Software may contain links to third-party websites or resources.
+
+b) These links are provided for convenience only and do not constitute endorsement.
+
+c) The Author is not responsible for the content or practices of linked websites.
+
+---
+
+## 14. TECHNICAL REQUIREMENTS AND COMPATIBILITY
+
+### 14.1 System Requirements
+
+a) The Software may have minimum system requirements for installation and operation.
+
+b) You are responsible for ensuring that Your devices meet such requirements.
+
+c) The Author is not responsible for issues arising from failure to meet system requirements.
+
+### 14.2 Compatibility
+
+a) The Software is designed for specific operating systems and platforms.
+
+b) The Author does not guarantee compatibility with all devices, operating systems, or configurations.
+
+c) The Author may discontinue support for certain operating systems or platforms at any time.
+
+### 14.3 Internet Connection
+
+a) The Software may require an internet connection for certain features.
+
+b) You are responsible for obtaining and maintaining such connection at Your own expense.
+
+---
+
+## 15. SUPPORT AND MAINTENANCE
+
+### 15.1 No Support Obligation
+
+a) The Author is under no obligation to provide any support, maintenance, training, or technical assistance for the Software.
+
+b) Any support provided by the Author is provided at the Author's sole discretion and may be modified or discontinued at any time.
+
+c) The Author may charge fees for support services in the future.
+
+### 15.2 Support Limitations
+
+If support is provided:
+
+a) Support is provided on an "as-available" basis with no guaranteed response times.
+
+b) The Author does not guarantee resolution of any issues.
+
+c) Support may be limited to certain versions of the Software.
+
+d) Support may be provided through specific channels designated by the Author.
+
+---
+
+## 16. FEEDBACK AND SUGGESTIONS
+
+### 16.1 Submission of Feedback
+
+If You provide any Feedback to the Author regarding the Software:
+
+a) You grant the Author an irrevocable, perpetual, worldwide, royalty-free, fully-paid, sublicensable, transferable license to use, reproduce, modify, create derivative works from, distribute, display, and otherwise exploit such Feedback for any purpose without restriction.
+
+b) You waive all moral rights in such Feedback to the extent permitted by law.
+
+c) You represent that You have all necessary rights to grant such license.
+
+d) You acknowledge that the Author is under no obligation to use any Feedback.
+
+e) You agree that the Author may already be developing similar ideas or features.
+
+f) You agree not to submit any Feedback that is confidential or proprietary to any third party.
+
+### 16.2 No Compensation
+
+You agree that You shall not receive any compensation, credit, or acknowledgment for any Feedback, and the Author is under no obligation to compensate You for any Feedback.
+
+---
+
+## 17. DISCLAIMER OF WARRANTIES
+
+### 17.1 "As Is" and "As Available"
+
+THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE.
+
+### 17.2 Disclaimer of All Warranties
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE AUTHOR EXPRESSLY DISCLAIMS ALL WARRANTIES, CONDITIONS, REPRESENTATIONS, AND GUARANTEES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING BUT NOT LIMITED TO:
+
+a) ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, SATISFACTORY QUALITY, TITLE, AND NON-INFRINGEMENT.
+
+b) ANY WARRANTIES ARISING FROM COURSE OF DEALING, COURSE OF PERFORMANCE, OR USAGE OF TRADE.
+
+c) ANY WARRANTIES THAT THE SOFTWARE WILL MEET YOUR REQUIREMENTS OR EXPECTATIONS.
+
+d) ANY WARRANTIES THAT THE SOFTWARE WILL BE UNINTERRUPTED, TIMELY, SECURE, OR ERROR-FREE.
+
+e) ANY WARRANTIES THAT THE RESULTS OBTAINED FROM THE USE OF THE SOFTWARE WILL BE ACCURATE, RELIABLE, OR COMPLETE.
+
+f) ANY WARRANTIES THAT ANY ERRORS OR DEFECTS IN THE SOFTWARE WILL BE CORRECTED.
+
+g) ANY WARRANTIES THAT THE SOFTWARE WILL BE COMPATIBLE WITH YOUR DEVICES OR OTHER SOFTWARE.
+
+h) ANY WARRANTIES REGARDING THE SECURITY, RELIABILITY, TIMELINESS, OR PERFORMANCE OF THE SOFTWARE.
+
+i) ANY WARRANTIES THAT THE SOFTWARE IS FREE FROM VIRUSES, MALWARE, OR OTHER HARMFUL COMPONENTS.
+
+j) ANY WARRANTIES REGARDING ANY THIRD-PARTY CONTENT OR SERVICES ACCESSED THROUGH THE SOFTWARE.
+
+### 17.3 Assumption of Risk
+
+YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT:
+
+a) YOUR USE OF THE SOFTWARE IS AT YOUR SOLE RISK.
+
+b) YOU ARE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR DEVICE, LOSS OF DATA, OR OTHER HARM RESULTING FROM YOUR USE OF THE SOFTWARE.
+
+c) NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED FROM THE AUTHOR OR THROUGH THE SOFTWARE SHALL CREATE ANY WARRANTY NOT EXPRESSLY MADE IN THIS AGREEMENT.
+
+d) THE AUTHOR DOES NOT WARRANT, ENDORSE, GUARANTEE, OR ASSUME RESPONSIBILITY FOR ANY PRODUCT OR SERVICE ADVERTISED OR OFFERED BY A THIRD PARTY THROUGH THE SOFTWARE.
+
+### 17.4 Jurisdictional Variations
+
+SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO SOME OF THE ABOVE EXCLUSIONS MAY NOT APPLY TO YOU. IN SUCH JURISDICTIONS, THE AUTHOR'S LIABILITY SHALL BE LIMITED TO THE MAXIMUM EXTENT PERMITTED BY LAW.
+
+---
+
+## 18. LIMITATION OF LIABILITY
+
+### 18.1 Exclusion of Certain Damages
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE AUTHOR, OR ANY OF THE AUTHOR'S AFFILIATES, AGENTS, REPRESENTATIVES, SUCCESSORS, OR ASSIGNS, BE LIABLE TO YOU OR ANY THIRD PARTY FOR:
+
+a) ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES.
+
+b) ANY DAMAGES FOR LOSS OF PROFITS, REVENUE, BUSINESS, SAVINGS, GOODWILL, OR ANTICIPATED SAVINGS.
+
+c) ANY DAMAGES FOR LOSS OF DATA, USE, OR OTHER INTANGIBLE LOSSES.
+
+d) ANY COST OF PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES.
+
+e) ANY DAMAGES FOR PERSONAL INJURY OR PROPERTY DAMAGE.
+
+f) ANY DAMAGES FOR BUSINESS INTERRUPTION.
+
+g) ANY DAMAGES FOR COMPUTER FAILURE OR MALFUNCTION.
+
+h) ANY DAMAGES RESULTING FROM UNAUTHORIZED ACCESS TO OR ALTERATION OF YOUR DATA OR TRANSMISSIONS.
+
+i) ANY DAMAGES ARISING FROM YOUR USE OF OR INABILITY TO USE THE SOFTWARE.
+
+j) ANY DAMAGES ARISING FROM CONTENT OBTAINED THROUGH THE SOFTWARE.
+
+k) ANY DAMAGES ARISING FROM THIRD-PARTY CONDUCT, CONTENT, OR SERVICES.
+
+l) ANY OTHER DAMAGES ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT OR THE SOFTWARE.
+
+WHETHER SUCH DAMAGES ARE BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY, OR ANY OTHER LEGAL THEORY, AND WHETHER OR NOT THE AUTHOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+### 18.2 Cap on Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE AUTHOR'S TOTAL CUMULATIVE LIABILITY TO YOU FOR ALL CLAIMS ARISING OUT OF OR RELATING TO THIS AGREEMENT OR THE SOFTWARE, WHETHER IN WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY, OR OTHERWISE, SHALL NOT EXCEED THE GREATER OF:
+
+a) THE TOTAL AMOUNT PAID BY YOU TO THE AUTHOR FOR THE SOFTWARE IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM; OR
+
+b) ONE HUNDRED PAKISTANI RUPEES (PKR 100).
+
+### 18.3 Basis of the Bargain
+
+YOU ACKNOWLEDGE AND AGREE THAT:
+
+a) THE AUTHOR HAS SET THE FEES (IF ANY) AND ENTERED INTO THIS AGREEMENT IN RELIANCE UPON THE DISCLAIMERS OF WARRANTY AND THE LIMITATIONS OF LIABILITY SET FORTH HEREIN.
+
+b) THESE DISCLAIMERS AND LIMITATIONS REFLECT A REASONABLE AND FAIR ALLOCATION OF RISK BETWEEN YOU AND THE AUTHOR.
+
+c) THESE DISCLAIMERS AND LIMITATIONS FORM AN ESSENTIAL BASIS OF THE BARGAIN BETWEEN YOU AND THE AUTHOR.
+
+d) THE AUTHOR WOULD NOT BE ABLE TO PROVIDE THE SOFTWARE TO YOU ON AN ECONOMICALLY REASONABLE BASIS WITHOUT THESE LIMITATIONS.
+
+### 18.4 Sole Developer Acknowledgment
+
+YOU EXPRESSLY ACKNOWLEDGE THAT THE SOFTWARE IS DEVELOPED BY A SOLE INDIVIDUAL DEVELOPER WITHOUT THE RESOURCES OF A LARGE COMPANY, AND THAT THE LIMITATIONS SET FORTH HEREIN ARE NECESSARY AND REASONABLE IN LIGHT OF THIS FACT.
+
+### 18.5 Jurisdictional Variations
+
+SOME JURISDICTIONS DO NOT ALLOW THE LIMITATION OR EXCLUSION OF LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO SOME OF THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU. IN SUCH JURISDICTIONS, THE AUTHOR'S LIABILITY SHALL BE LIMITED TO THE MAXIMUM EXTENT PERMITTED BY LAW.
+
+---
+
+## 19. INDEMNIFICATION
+
+### 19.1 Your Indemnification Obligations
+
+You agree to indemnify, defend, and hold harmless the Author, and the Author's affiliates, officers, directors, employees, agents, representatives, licensors, suppliers, successors, and assigns, from and against any and all claims, demands, actions, suits, proceedings, losses, damages, liabilities, costs, and expenses (including reasonable attorneys' fees and court costs) arising out of or relating to:
+
+a) Your use or misuse of the Software.
+
+b) Your violation of this Agreement.
+
+c) Your violation of any applicable law, rule, or regulation.
+
+d) Your violation or infringement of any rights of any third party, including Intellectual Property Rights, privacy rights, or publicity rights.
+
+e) Any content that You download, upload, or transmit using the Software.
+
+f) Any claims by third parties arising from Your use of the Software.
+
+g) Your negligence, willful misconduct, or fraud.
+
+h) Any dispute between You and any third party.
+
+### 19.2 Indemnification Procedure
+
+a) The Author will notify You of any claim subject to indemnification, provided that failure to provide such notice shall not relieve You of Your indemnification obligations except to the extent You are materially prejudiced.
+
+b) You shall have the right to assume control of the defense of any claim, provided that the Author may participate in the defense at the Author's own expense.
+
+c) You shall not settle any claim without the Author's prior written consent if such settlement would impose any obligation on the Author or adversely affect the Author's interests.
+
+d) The Author reserves the right, at Your expense, to assume exclusive defense and control of any matter subject to indemnification.
+
+---
+
+## 20. TERM AND TERMINATION
+
+### 20.1 Term
+
+This Agreement is effective from the Effective Date and shall continue in force until terminated in accordance with its terms.
+
+### 20.2 Termination by You
+
+You may terminate this Agreement at any time by:
+
+a) Ceasing all use of the Software.
+
+b) Deleting and destroying all copies of the Software in Your possession or control.
+
+### 20.3 Termination by the Author
+
+a) The Author may terminate this Agreement and Your License immediately, without prior notice, at any time, for any reason or no reason, at the Author's sole discretion.
+
+b) Without limiting the foregoing, the Author may terminate this Agreement if:
+   - You breach any term or condition of this Agreement.
+   - You engage in any prohibited use of the Software.
+   - The Author discontinues the Software.
+   - The Author is required to do so by law.
+   - The Author believes, in good faith, that continued provision of the Software is no longer commercially viable.
+
+c) The Author may provide notice of termination by any means available, including through the Software, but is not required to provide any notice.
+
+### 20.4 Suspension
+
+The Author reserves the right to suspend Your access to the Software, in whole or in part, temporarily or permanently, at any time, without notice, for any reason, including but not limited to suspected violations of this Agreement.
+
+---
+
+## 21. EFFECTS OF TERMINATION
+
+### 21.1 Upon Termination
+
+Upon termination of this Agreement for any reason:
+
+a) Your License and all rights granted under this Agreement shall immediately cease.
+
+b) You must immediately cease all use of the Software.
+
+c) You must delete, destroy, or return to the Author all copies of the Software in Your possession or control.
+
+d) You must delete all Documentation and related materials.
+
+e) Any provisions of this Agreement that by their nature should survive termination shall survive.
+
+### 21.2 No Refunds
+
+Upon termination, You are not entitled to any refund of any fees paid, except as required by applicable law.
+
+### 21.3 No Liability
+
+The Author shall not be liable to You or any third party for any termination or suspension of Your access to the Software, regardless of the reason for such termination or suspension.
+
+### 21.4 Survival
+
+The following Sections shall survive any termination or expiration of this Agreement: Section 5 (Intellectual Property Rights), Section 6 (Reservation of Rights), Section 12 (Data Collection), Section 16 (Feedback), Section 17 (Disclaimer of Warranties), Section 18 (Limitation of Liability), Section 19 (Indemnification), Section 21 (Effects of Termination), Section 23 (Governing Law and Jurisdiction), Section 24 (Dispute Resolution), Section 25 (Class Action Waiver), and any other provisions that by their nature should survive.
+
+---
+
+## 22. EXPORT COMPLIANCE
+
+### 22.1 Export Restrictions
+
+a) The Software may be subject to export control laws and regulations.
+
+b) You agree to comply with all applicable export and re-export restrictions and regulations.
+
+c) You shall not export or re-export the Software except in compliance with applicable laws.
+
+d) You represent that You are not located in, or a resident or national of, any country subject to trade sanctions or embargoes.
+
+---
+
+## 23. GOVERNING LAW AND JURISDICTION
+
+### 23.1 Governing Law
+
+**THIS AGREEMENT SHALL BE GOVERNED BY AND CONSTRUED EXCLUSIVELY IN ACCORDANCE WITH THE LAWS OF THE ISLAMIC REPUBLIC OF PAKISTAN, WITHOUT REGARD TO ITS CONFLICTS OF LAW PRINCIPLES.**
+
+### 23.2 Exclusive Jurisdiction
+
+a) **YOU EXPRESSLY AGREE THAT ANY DISPUTE, CONTROVERSY, OR CLAIM ARISING OUT OF OR RELATING TO THIS AGREEMENT OR THE SOFTWARE SHALL BE SUBJECT TO THE EXCLUSIVE JURISDICTION OF THE COURTS OF PAKISTAN.**
+
+b) You hereby irrevocably and unconditionally submit to the exclusive jurisdiction of the courts of Pakistan for the purpose of any such suit, action, or proceeding.
+
+c) You hereby irrevocably and unconditionally waive any objection to the laying of venue in the courts of Pakistan.
+
+d) You hereby irrevocably and unconditionally waive any claim that any suit, action, or proceeding brought in the courts of Pakistan has been brought in an inconvenient forum.
+
+### 23.3 Rejection of Other Jurisdictions
+
+a) **YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT THE LAWS OF NO OTHER COUNTRY, STATE, PROVINCE, TERRITORY, OR JURISDICTION SHALL APPLY TO THIS AGREEMENT OR ANY DISPUTE ARISING HEREUNDER.**
+
+b) Any provision of any law of any other jurisdiction that would require application of a different law shall be disregarded to the maximum extent permitted by law.
+
+c) You waive any right to bring any claim or action against the Author in any jurisdiction other than Pakistan.
+
+d) Any judgment or award obtained in any court or forum outside of Pakistan shall not be enforceable against the Author.
+
+### 23.4 Pakistan Law Acknowledgment
+
+You acknowledge that:
+
+a) Pakistan is the sole jurisdiction governing this Agreement.
+
+b) Pakistani courts have exclusive jurisdiction over any disputes.
+
+c) You have reviewed this Agreement with the understanding that Pakistan law applies.
+
+d) You accept any differences between Pakistani law and the laws of Your jurisdiction.
+
+e) If there is any conflict between Pakistani law and the laws of Your jurisdiction, Pakistani law shall prevail to the extent permitted.
+
+---
+
+## 24. DISPUTE RESOLUTION
+
+### 24.1 Informal Resolution
+
+Before initiating any formal dispute resolution proceedings, You agree to first contact the Author to attempt to resolve any dispute informally. Most disputes can be resolved informally through good-faith negotiations.
+
+### 24.2 Negotiation Period
+
+a) You agree to negotiate in good faith for a period of at least thirty (30) days before initiating any legal action.
+
+b) During this period, both parties shall make reasonable efforts to resolve the dispute amicably.
+
+c) Failure to comply with this negotiation requirement may be raised as a defense in any subsequent legal action.
+
+### 24.3 Mediation
+
+If informal negotiations fail, either party may request mediation before a mutually agreed-upon mediator in Pakistan.
+
+### 24.4 Arbitration
+
+a) Any dispute that cannot be resolved through negotiation or mediation may, at the Author's option, be submitted to binding arbitration in accordance with the arbitration laws of Pakistan.
+
+b) Arbitration shall be conducted in Urdu or English, at the Author's discretion.
+
+c) The arbitrator's decision shall be final and binding.
+
+d) Judgment on the arbitration award may be entered in any court of competent jurisdiction in Pakistan.
+
+### 24.5 Litigation
+
+If the Author does not elect arbitration, any dispute may be resolved through litigation in the courts of Pakistan in accordance with Section 23.
+
+### 24.6 Injunctive Relief
+
+Notwithstanding the foregoing, the Author may seek injunctive or other equitable relief in any court of competent jurisdiction to protect the Author's Intellectual Property Rights.
+
+### 24.7 Costs and Fees
+
+Each party shall bear its own costs and fees in connection with any dispute resolution proceedings, unless otherwise awarded by the arbitrator or court.
+
+---
+
+## 25. CLASS ACTION WAIVER
+
+### 25.1 No Class Actions
+
+TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW:
+
+a) YOU AGREE THAT ANY DISPUTE RESOLUTION PROCEEDINGS WILL BE CONDUCTED ONLY ON AN INDIVIDUAL BASIS AND NOT IN A CLASS, CONSOLIDATED, OR REPRESENTATIVE ACTION.
+
+b) YOU WAIVE ANY RIGHT TO PARTICIPATE IN ANY CLASS ACTION, COLLECTIVE ACTION, OR REPRESENTATIVE ACTION AGAINST THE AUTHOR.
+
+c) YOU WAIVE ANY RIGHT TO CONSOLIDATE CLAIMS WITH OTHER PERSONS.
+
+d) IF FOR ANY REASON A CLAIM PROCEEDS IN COURT RATHER THAN IN ARBITRATION, YOU WAIVE ANY RIGHT TO A JURY TRIAL.
+
+### 25.2 Exception
+
+If the class action waiver is found to be unenforceable, the entire dispute resolution provision (excluding this exception) shall be null and void as to the claims subject to the class action waiver.
+
+---
+
+## 26. SEVERABILITY
+
+### 26.1 Severability Clause
+
+If any provision of this Agreement is held to be invalid, illegal, unenforceable, or in conflict with the law of any jurisdiction:
+
+a) Such provision shall be modified to the minimum extent necessary to make it valid, legal, and enforceable while preserving its original intent.
+
+b) If modification is not possible, such provision shall be severed from this Agreement.
+
+c) The invalidity of such provision shall not affect the validity and enforceability of the remaining provisions.
+
+d) The remaining provisions shall continue in full force and effect.
+
+e) The invalid provision shall be replaced by a valid provision that most closely approximates the intent of the original provision.
+
+---
+
+## 27. ENTIRE AGREEMENT
+
+### 27.1 Complete Agreement
+
+This Agreement, together with any other terms referenced herein and any updates thereto, constitutes the entire agreement between You and the Author with respect to the Software and supersedes all prior or contemporaneous understandings, agreements, representations, warranties, and communications, whether written or oral, with respect to the subject matter hereof.
+
+### 27.2 No Other Representations
+
+You acknowledge that You have not relied upon any representations, statements, or understandings not expressly set forth in this Agreement.
+
+### 27.3 Precedence
+
+In the event of any conflict between this Agreement and any other document, this Agreement shall prevail unless the other document expressly states that it supersedes this Agreement with respect to specific provisions.
+
+---
+
+## 28. AMENDMENT AND MODIFICATION
+
+### 28.1 Right to Amend
+
+a) The Author reserves the right to amend, modify, update, or change this Agreement at any time, at the Author's sole discretion.
+
+b) Amendments may be made for any reason, including but not limited to changes in the Software, changes in law, or changes in business practices.
+
+### 28.2 Notice of Amendments
+
+a) The Author may notify You of amendments through various means, including but not limited to:
+   - Posting the amended Agreement on the Author's website
+   - Displaying a notice in the Software
+   - Sending an email to the address You have provided (if any)
+   - Any other means the Author deems appropriate
+
+b) It is Your responsibility to review this Agreement periodically for changes.
+
+c) Amendments shall be effective immediately upon posting or such other date as specified by the Author.
+
+### 28.3 Acceptance of Amendments
+
+a) Your continued use of the Software after any amendment constitutes Your acceptance of the amended Agreement.
+
+b) If You do not agree to any amendment, Your sole remedy is to cease using the Software and delete all copies.
+
+### 28.4 No Oral Modifications
+
+This Agreement may not be amended or modified except in writing by the Author. No oral statement or representation shall modify this Agreement.
+
+---
+
+## 29. WAIVER
+
+### 29.1 No Waiver
+
+a) No failure or delay by the Author in exercising any right, power, or remedy under this Agreement shall operate as a waiver thereof.
+
+b) No single or partial exercise of any right, power, or remedy shall preclude any other or further exercise thereof or the exercise of any other right, power, or remedy.
+
+c) No waiver of any provision of this Agreement shall be effective unless in writing and signed by the Author.
+
+### 29.2 Limited Waiver
+
+Any waiver granted by the Author shall be limited to the specific instance and shall not constitute a waiver of any other provision or any subsequent breach of the same or any other provision.
+
+---
+
+## 30. ASSIGNMENT AND TRANSFER
+
+### 30.1 Restriction on Your Assignment
+
+a) You may not assign, transfer, delegate, sublicense, or otherwise dispose of this Agreement or any of Your rights or obligations hereunder without the prior written consent of the Author.
+
+b) Any attempted assignment, transfer, or delegation in violation of this Section shall be null and void.
+
+### 30.2 Author's Right to Assign
+
+a) The Author may freely assign, transfer, or delegate this Agreement or any of the Author's rights or obligations hereunder to any third party without Your consent and without notice.
+
+b) This Agreement shall be binding upon and inure to the benefit of the Author's successors, assigns, heirs, and legal representatives.
+
+---
+
+## 31. FORCE MAJEURE
+
+### 31.1 Force Majeure Events
+
+The Author shall not be liable for any failure or delay in performing any obligation under this Agreement due to causes beyond the Author's reasonable control, including but not limited to:
+
+a) Acts of God, natural disasters, earthquakes, floods, fires, storms, or other natural events.
+
+b) War, terrorism, riots, civil unrest, or armed conflict.
+
+c) Government actions, laws, regulations, embargoes, or orders.
+
+d) Strikes, labor disputes, or lockouts.
+
+e) Epidemics, pandemics, or public health emergencies.
+
+f) Power failures, internet outages, or telecommunications failures.
+
+g) Failure of third-party services or suppliers.
+
+h) Any other event beyond the Author's reasonable control.
+
+### 31.2 Effect of Force Majeure
+
+In the event of a force majeure, the Author's obligations shall be suspended for the duration of such event, and the Author shall not be liable for any resulting delay or failure.
+
+---
+
+## 32. NOTICES AND COMMUNICATIONS
+
+### 32.1 Notices to You
+
+a) The Author may provide notices, communications, and disclosures to You through various means, including but not limited to:
+   - In-app notifications or messages
+   - Posting on the Author's website
+   - Email to the address You have provided (if any)
+   - Any other means the Author deems appropriate
+
+b) Notices shall be effective upon posting or sending, as applicable.
+
+### 32.2 Notices to the Author
+
+a) Any notices to the Author must be sent to the contact information provided in this Agreement.
+
+b) Notices to the Author shall be effective upon actual receipt.
+
+---
+
+## 33. LANGUAGE
+
+### 33.1 English Language
+
+This Agreement is drafted in the English language. If this Agreement is translated into any other language and there is any conflict between the English version and the translated version, the English version shall prevail.
+
+### 33.2 Legal Proceedings
+
+Any legal proceedings relating to this Agreement shall be conducted in English or Urdu, at the discretion of the court or arbitrator.
+
+---
+
+## 34. SURVIVAL
+
+All provisions of this Agreement that by their nature are intended to survive termination shall survive termination, including but not limited to intellectual property provisions, warranty disclaimers, limitations of liability, indemnification obligations, and governing law provisions.
+
+---
+
+## 35. ACKNOWLEDGMENT AND ACCEPTANCE
+
+### 35.1 Your Acknowledgment
+
+BY DOWNLOADING, INSTALLING, ACCESSING, OR USING THE SOFTWARE, YOU ACKNOWLEDGE THAT:
+
+a) You have read this Agreement in its entirety.
+
+b) You understand all the terms and conditions of this Agreement.
+
+c) You agree to be bound by all the terms and conditions of this Agreement.
+
+d) You have the legal capacity and authority to enter into this Agreement.
+
+e) If You are entering into this Agreement on behalf of an entity, You have the authority to bind such entity.
+
+f) You are at least eighteen (18) years of age or the age of majority in Your jurisdiction, whichever is higher.
+
+g) You understand that this Agreement is a legally binding contract.
+
+h) You have had the opportunity to seek legal advice before accepting this Agreement.
+
+i) You acknowledge that the Software is developed by an independent, unregistered, sole developer.
+
+j) You acknowledge that the Software is currently free but may become paid.
+
+k) You acknowledge that the Software is currently ad-free but may include advertisements.
+
+l) You acknowledge that prices and features may change at any time.
+
+m) You acknowledge that only Pakistani law governs this Agreement.
+
+n) You acknowledge all disclaimers of warranty and limitations of liability.
+
+o) You voluntarily and knowingly accept all the risks associated with using the Software.
+
+---
+
+## 36. CONTACT INFORMATION
+
+### 36.1 Developer Information
+
+**Developer/Author/Owner:**
+Hussnain Ahmad
+Independent Software Developer
+Sole Proprietor (Unregistered)
+
+**Email:** [Your Email Address]
+
+**Website:** [Your Website, if applicable]
+
+**Location:** Pakistan
+
+### 36.2 Communication
+
+For any questions, concerns, feedback, support requests, or legal inquiries regarding this Agreement or the Software, please contact the Author at the email address provided above.
+
+---
+
+## FINAL PROVISIONS
+
+### Copyright Notice
+
+Copyright © 2024-2026 Hussnain Ahmad. All rights reserved.
+
+This Software and all associated materials are protected by copyright and other intellectual property laws. Unauthorized reproduction, modification, distribution, or use is strictly prohibited and may result in civil and criminal penalties.
+
+### Trademark Notice
+
+Hyper Download Manager™ and all associated logos, product names, and service marks are trademarks of Hussnain Ahmad. All other trademarks are the property of their respective owners.
+
+### Legal Notice
+
+This End User License Agreement constitutes a legal agreement. By using the Software, You are agreeing to be bound by its terms. If You do not agree to these terms, do not use the Software.
+
+---
+
+**END OF END USER LICENSE AGREEMENT**
+
+---
+
+*Last Updated: [Insert Date]*
+
+*Version: 1.0*
+
+*This Agreement was last modified on [Insert Date].*
+
+---
+
+**BY CLICKING "I ACCEPT," "AGREE," "INSTALL," OR BY DOWNLOADING, INSTALLING, OR USING THE SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY ALL THE TERMS AND CONDITIONS OF THIS AGREEMENT.**

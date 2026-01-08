@@ -37,7 +37,7 @@ function createPanel() {
     downloadPanel.id = 'hdm-download-panel';
     downloadPanel.innerHTML = `
         <div class="hdm-header">
-            <span>⬇️ Download Video</span>
+            <span>⬇️ Download with Hyper Manager</span>
             <span class="hdm-close-btn" id="hdm-close">&times;</span>
         </div>
         <div class="hdm-content" id="hdm-content">
@@ -73,6 +73,20 @@ function checkAndInject() {
     if (player && !document.getElementById('hdm-floating-trigger')) {
         createTriggerButton(player);
     }
+
+    // Prefetch qualities so the panel is ready before the user clicks.
+    prefetchQualitiesIfNeeded();
+}
+
+function prefetchQualitiesIfNeeded() {
+    if (!downloadPanel || !currentVideoId) return;
+    if (downloadPanel.dataset.loadedId === currentVideoId) return;
+    if (downloadPanel.dataset.fetchingId === currentVideoId) return;
+    if (downloadPanel.dataset.prefetchId === currentVideoId) return;
+
+    // Only prefetch once per video; user click can retry if it fails.
+    downloadPanel.dataset.prefetchId = currentVideoId;
+    fetchQualities();
 }
 
 function createTriggerButton(playerContainer) {
@@ -80,7 +94,7 @@ function createTriggerButton(playerContainer) {
 
     triggerButton = document.createElement('button');
     triggerButton.id = 'hdm-floating-trigger';
-    triggerButton.innerHTML = '<span>⬇️</span> Download Video';
+    triggerButton.innerHTML = '<span>⬇️</span> Download with Hyper Manager';
 
     // Position: Absolute relative to player
     triggerButton.style.display = 'flex';
@@ -107,9 +121,63 @@ function resetPanel() {
     downloadPanel.dataset.loadedId = '';
 }
 
+function positionPanelUnderTrigger() {
+    const panel = downloadPanel;
+    const btn = document.getElementById('hdm-floating-trigger');
+    if (!panel || !btn) return;
+
+    // Cap panel height to <= 1/2 of the YouTube player height (UI only).
+    const player = document.querySelector('#movie_player') || document.querySelector('.html5-video-player');
+    const header = panel.querySelector('.hdm-header');
+    const footer = panel.querySelector('.hdm-footer');
+    const content = panel.querySelector('.hdm-content');
+
+    if (player && header && footer && content) {
+        const playerRect = player.getBoundingClientRect();
+        const maxPanelHeight = Math.floor(playerRect.height * 0.5);
+
+        const headerH = header.getBoundingClientRect().height;
+        const footerH = footer.getBoundingClientRect().height;
+        const chrome = 2; // borders
+
+        let maxContentHeight = maxPanelHeight - headerH - footerH - chrome;
+        if (maxContentHeight < 0) maxContentHeight = 0;
+
+        content.style.maxHeight = `${Math.floor(maxContentHeight)}px`;
+    }
+
+    const btnRect = btn.getBoundingClientRect();
+    const panelRect = panel.getBoundingClientRect();
+
+    const margin = 6;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    // Prefer aligning panel's right edge with button's right edge.
+    let left = btnRect.right - panelRect.width;
+    let top = btnRect.bottom + margin;
+
+    // If there's not enough space below, open above.
+    if (top + panelRect.height + 8 > vh) {
+        top = btnRect.top - panelRect.height - margin;
+    }
+
+    // Clamp within viewport.
+    const maxLeft = Math.max(8, vw - panelRect.width - 8);
+    const maxTop = Math.max(8, vh - panelRect.height - 8);
+    left = Math.min(Math.max(left, 8), maxLeft);
+    top = Math.min(Math.max(top, 8), maxTop);
+
+    // Convert viewport coords -> page coords for absolute positioning.
+    panel.style.left = `${Math.round(left + window.scrollX)}px`;
+    panel.style.top = `${Math.round(top + window.scrollY)}px`;
+    panel.style.right = 'auto';
+}
+
 function showPanel() {
     if (!downloadPanel) createPanel();
     downloadPanel.classList.add('visible');
+    positionPanelUnderTrigger();
 
     // Only fetch if not already fetched for this video
     if (downloadPanel.dataset.loadedId !== currentVideoId) {
@@ -118,6 +186,15 @@ function showPanel() {
 }
 
 function fetchQualities() {
+    if (!downloadPanel || !currentVideoId) return;
+
+    const requestVideoId = currentVideoId;
+    const requestUrl = window.location.href;
+
+    // Avoid duplicate fetches for the same video.
+    if (downloadPanel.dataset.fetchingId === requestVideoId) return;
+    downloadPanel.dataset.fetchingId = requestVideoId;
+
     const content = document.getElementById('hdm-content');
     content.innerHTML = `
         <div class="hdm-loading">
@@ -132,10 +209,18 @@ function fetchQualities() {
 
     chrome.runtime.sendMessage({
         type: "FETCH_VARIANTS",
-        url: window.location.href
+        url: requestUrl
     }, (response) => {
+        // Clear in-flight marker (only if it's still ours).
+        if (downloadPanel.dataset.fetchingId === requestVideoId) {
+            downloadPanel.dataset.fetchingId = '';
+        }
+
+        // Ignore stale responses if the user navigated to a different video.
+        if (currentVideoId !== requestVideoId) return;
+
         if (response && response.success) {
-            downloadPanel.dataset.loadedId = currentVideoId;
+            downloadPanel.dataset.loadedId = requestVideoId;
             // Store title for later use
             if (response.info && response.info.title) {
                 downloadPanel.dataset.videoTitle = response.info.title;

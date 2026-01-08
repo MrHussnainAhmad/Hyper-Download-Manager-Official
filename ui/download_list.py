@@ -2,7 +2,7 @@ from PySide6.QtWidgets import (QTableWidget, QTableWidgetItem, QAbstractItemView
                                QHeaderView, QWidget, QHBoxLayout, QVBoxLayout,
                                QLabel, QProgressBar, QStyledItemDelegate, QStyle,
                                QFrame, QStackedWidget)
-from PySide6.QtCore import Qt, Signal, QRect, QSize
+from PySide6.QtCore import Qt, Signal, QRect, QSize, QEvent
 from PySide6.QtGui import QColor, QPainter, QFont, QBrush, QPen, QLinearGradient
 
 from functools import partial
@@ -206,6 +206,7 @@ class DownloadList(QWidget):
     
     open_progress = Signal(object)
     context_menu_requested = Signal(object, object)
+    delete_requested = Signal()
 
     def __init__(self):
         super().__init__()
@@ -249,7 +250,7 @@ class DownloadList(QWidget):
         self.table.verticalHeader().setVisible(False)
         self.table.setShowGrid(False)
         self.table.setAlternatingRowColors(True)
-        self.table.setFocusPolicy(Qt.NoFocus)
+        self.table.setFocusPolicy(Qt.StrongFocus)
         
         # Column sizing
         header = self.table.horizontalHeader()
@@ -276,6 +277,17 @@ class DownloadList(QWidget):
         self.table.setContextMenuPolicy(Qt.CustomContextMenu)
         self.table.customContextMenuRequested.connect(self._on_context_menu)
         self.table.itemDoubleClicked.connect(self._on_double_click)
+        
+        # Install event filter to catch Delete key
+        self.table.installEventFilter(self)
+
+    def eventFilter(self, source, event):
+        if source == self.table and event.type() == QEvent.KeyPress:
+            if event.key() == Qt.Key_Delete:
+                self.delete_requested.emit()
+                return True
+        return super().eventFilter(source, event)
+
         
     def _update_empty_state(self):
         """Show empty state if no downloads"""

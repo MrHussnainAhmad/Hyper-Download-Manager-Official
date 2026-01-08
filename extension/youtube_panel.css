@@ -1,22 +1,23 @@
-/* YouTube Download Panel - Premium IDM Style */
+/* YouTube Download Panel - IDM-like UI */
 #hdm-download-panel {
-    position: fixed;
-    top: 100px;
-    right: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 320px;
     background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
     z-index: 2147483647;
     /* Max z-index */
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    color: #333;
+    font-size: 12px;
+    color: #222;
     display: none;
     opacity: 0;
     transform: translateY(-10px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.18s ease, transform 0.18s ease;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.35);
 }
 
 #hdm-download-panel.visible {
@@ -26,29 +27,29 @@
 }
 
 .hdm-header {
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-    color: white;
-    padding: 12px 16px;
+    background: linear-gradient(#fdfdfd 0%, #e7e7e7 100%);
+    color: #111;
+    padding: 6px 8px;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.18);
 }
 
 .hdm-header span {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .hdm-close-btn {
     cursor: pointer;
-    font-size: 20px;
-    opacity: 0.8;
+    font-size: 18px;
+    opacity: 0.75;
     line-height: 1;
-    transition: opacity 0.2s;
+    transition: opacity 0.15s ease;
 }
 
 .hdm-close-btn:hover {
@@ -57,38 +58,29 @@
 
 .hdm-content {
     padding: 0;
-    max-height: 350px;
+    /* Fallback; JS will set a stricter max-height based on player height */
+    max-height: min(260px, 50vh);
     overflow-y: auto;
     background-color: #fff;
+
+    /* Hide scrollbars (still scrollable with wheel/touchpad) */
+    scrollbar-width: none; /* Firefox */
 }
 
-/* Custom Scrollbar */
 .hdm-content::-webkit-scrollbar {
-    width: 6px;
-}
-
-.hdm-content::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.hdm-content::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 3px;
-}
-
-.hdm-content::-webkit-scrollbar-thumb:hover {
-    background: #aaa;
+    width: 0;
+    height: 0;
 }
 
 .hdm-loading {
     text-align: center;
-    padding: 30px 20px;
+    padding: 16px 12px;
     color: #666;
-    font-size: 14px;
+    font-size: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .hdm-spinner {
@@ -119,10 +111,10 @@
 .hdm-quality-item {
     display: flex;
     align-items: center;
-    padding: 10px 16px;
+    padding: 6px 8px;
     cursor: pointer;
-    border-bottom: 1px solid #f0f0f0;
-    transition: background-color 0.15s;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    transition: background-color 0.12s ease;
 }
 
 .hdm-quality-item:last-child {
@@ -130,20 +122,20 @@
 }
 
 .hdm-quality-item:hover {
-    background-color: #f8f9fa;
+    background-color: #eef5ff;
 }
 
 .hdm-quality-item.selected {
-    background-color: #e8f0fe;
+    background-color: #d6e7ff;
 }
 
 /* Custom Radio */
 .hdm-radio {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border: 2px solid #ccc;
     border-radius: 50%;
-    margin-right: 12px;
+    margin-right: 8px;
     position: relative;
     transition: border-color 0.2s;
 }
@@ -155,8 +147,8 @@
 .hdm-quality-item.selected .hdm-radio::after {
     content: '';
     position: absolute;
-    top: 3px;
-    left: 3px;
+    top: 2px;
+    left: 2px;
     width: 6px;
     height: 6px;
     background-color: #007bff;
@@ -170,54 +162,57 @@
 }
 
 .hdm-res {
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
+    font-size: 12px;
+    font-weight: 600;
+    color: #111;
 }
 
 .hdm-meta {
-    font-size: 12px;
-    color: #888;
-    margin-top: 2px;
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.55);
+    margin-top: 1px;
 }
 
 .hdm-quality-size {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
-    color: #555;
-    margin-left: 10px;
+    color: #444;
+    margin-left: 8px;
 }
 
 .hdm-footer {
-    padding: 12px 16px;
-    border-top: 1px solid #eee;
-    background-color: #f8f9fa;
+    padding: 6px 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.18);
+    background: linear-gradient(#fafafa 0%, #e7e7e7 100%);
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 6px;
 }
 
 .hdm-btn {
-    padding: 8px 20px;
-    border-radius: 4px;
-    font-size: 13px;
+    padding: 5px 12px;
+    border-radius: 2px;
+    font-size: 11px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-    border: none;
+    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+    border: 1px solid rgba(0, 0, 0, 0.35);
     outline: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .hdm-download-btn {
-    background-color: #28a745;
-    color: white;
-    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2);
+    background: linear-gradient(#39c463 0%, #1f9b3f 100%);
+    border-color: rgba(0, 0, 0, 0.35);
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .hdm-download-btn:hover {
-    background-color: #218838;
+    background: linear-gradient(#45d36f 0%, #1a8736 100%);
     transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(40, 167, 69, 0.25);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.30);
 }
 
 .hdm-download-btn:active {
@@ -225,49 +220,101 @@
 }
 
 .hdm-download-btn:disabled {
-    background-color: #e0e0e0;
-    color: #a0a0a0;
+    background: linear-gradient(#f1f1f1 0%, #dcdcdc 100%);
+    color: rgba(0, 0, 0, 0.45);
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
+    opacity: 0.8;
 }
 
-/* Floating Trigger Button */
+/* Floating Trigger Button (IDM-like) */
 #hdm-floating-trigger {
     position: absolute;
-    top: 5px;
-    left: 5px;
+    top: 8px;
+    right: 8px;
+    left: auto;
     z-index: 1000;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 28px 6px 10px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.35);
+
+    background: linear-gradient(#ffffff 0%, #e6e6e6 100%);
+    color: #0b2d5c;
+
     cursor: pointer;
     font-size: 12px;
     font-family: inherit;
     font-weight: 600;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    line-height: 1;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+
+    /* 50% opacity by default, 100% on hover */
+    opacity: 0.5;
+    transition: opacity 0.15s ease, background 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+
+    -webkit-appearance: none;
+    appearance: none;
+
     animation: hdm-fade-in 0.3s ease;
+}
+
+#hdm-floating-trigger span {
+    display: none;
+}
+
+#hdm-floating-trigger::before {
+    content: '▶';
+    display: inline-block;
+    transform: rotate(90deg);
+    color: #1aa34a;
+    font-size: 12px;
+    margin-right: 2px;
+}
+
+#hdm-floating-trigger::after {
+    content: '▾';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.65);
 }
 
 @keyframes hdm-fade-in {
     from {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.95);
     }
 
     to {
-        opacity: 1;
+        opacity: 0.5;
         transform: scale(1);
     }
 }
 
-#hdm-floating-trigger:hover {
-    background-color: #0056b3;
+#hdm-floating-trigger:hover,
+#hdm-floating-trigger:focus-visible {
+    opacity: 1;
+    background: linear-gradient(#ffffff 0%, #dcdcdc 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
     transform: translateY(-1px);
+}
+
+#hdm-floating-trigger:active {
+    transform: translateY(0);
+    background: linear-gradient(#dcdcdc 0%, #ffffff 100%);
+}
+
+#hdm-floating-trigger:focus-visible {
+    outline: 2px solid rgba(0, 123, 255, 0.6);
+    outline-offset: 2px;
 }

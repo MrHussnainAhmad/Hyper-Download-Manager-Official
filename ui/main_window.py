@@ -224,6 +224,36 @@ class MainWindow(QMainWindow):
         # List signals
         self.list_view.open_progress.connect(self.open_progress_dialog)
         self.list_view.context_menu_requested.connect(self.show_context_menu)
+        self.list_view.delete_requested.connect(self.remove_selected)
+        
+        # Connect status updates
+        self.manager.download_added.connect(self.update_status_counts)
+        self.manager.download_removed.connect(self.update_status_counts)
+        # We need to connect to status changes of existing and new tasks
+        for task in self.manager.downloads:
+             task.status_changed.connect(lambda s: self.update_status_counts())
+             
+        # Initial update
+        self.update_status_counts()
+
+    def update_status_counts(self):
+        """Update the status bar counts for active and completed downloads"""
+        total_active = 0
+        total_completed = 0
+        
+        for task in self.manager.downloads:
+            if task.status == "Downloading":
+                total_active += 1
+            elif task.status in ["Finished", "Completed"]:
+                total_completed += 1
+                
+        # Update labels with plurals handling
+        d_text = "download" if total_completed == 1 else "downloads"
+        self.footer_count.setText(f"{total_completed} completed")
+        
+        a_text = "active" # simplifying text as per request active downloads -> active
+        self.active_count.setText(f"{total_active} active")
+
         
     def apply_theme(self):
         """Apply current theme to all components"""
@@ -365,6 +395,10 @@ class MainWindow(QMainWindow):
                     quality=returned_quality,  # Use value from dialog
                     itag=returned_itag         # Use value from dialog
                 )
+                
+                # Connect status change for UI updates
+                task.status_changed.connect(lambda s: self.update_status_counts())
+                self.update_status_counts()
                 
                 if auto_start:
                     self.open_progress_dialog(task)
