@@ -347,8 +347,9 @@ class DownloadList(QWidget):
         
         t = theme.current
         
-        # 0: Name (handled by delegate)
-        name = task.url.split('/')[-1] or "Unknown"
+        # 0: Name (get from save_path, not URL)
+        import os
+        name = os.path.basename(task.save_path) if task.save_path else "Unknown"
         name_item = QTableWidgetItem(name)
         name_item.setData(Qt.UserRole, task)
         self.table.setItem(row, 0, name_item)

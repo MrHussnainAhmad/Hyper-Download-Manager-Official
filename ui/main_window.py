@@ -14,6 +14,7 @@ from ui.components import IconLabel
 from core.download_manager import DownloadManager
 from utils.system_monitor import SystemMonitorWorker
 from core.updater import UpdateChecker
+from core.ytdlp_updater import YtDlpUpdater
 from ui.dialogs import UpdateDialog
 from utils.helpers import get_app_version
 
@@ -26,10 +27,11 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(950, 650)
         
         self._active_dialogs = []
+        self._ytdlp_updater = None
         
         # Initialize components
         self.manager = DownloadManager()
-        self.monitor = SystemMonitorWorker()
+        self.monitor =SystemMonitorWorker()
         
         # Setup UI
         self._setup_menu_bar()
@@ -37,11 +39,15 @@ class MainWindow(QMainWindow):
         self._setup_status_bar()
         self._connect_signals()
         
+        
         # Apply initial theme
         self.apply_theme()
         
         # Start monitoring
         self.monitor.start()
+        
+        # Start background yt-dlp updater (non-blocking)
+        self._start_ytdlp_updater()
         
         # Check for updates
         UPDATE_API_URL = "https://hyper-download-manager-web.vercel.app" 
@@ -102,7 +108,18 @@ class MainWindow(QMainWindow):
         self.action_about = help_menu.addAction("About")
         self.action_about.setIcon(get_icon(IconType.INFO, theme.get('text_primary'), 16))
         self.action_about.triggered.connect(self.show_about_dialog)
-        
+
+        settings_menu = self.menu_bar.addMenu("Settings")
+        self.action_settings = settings_menu.addAction("Preferences")
+        self.action_settings.setIcon(get_icon(IconType.SETTINGS, theme.get('text_primary'), 16))
+        self.action_settings.setShortcut("Ctrl+,")
+        self.action_settings.triggered.connect(self.show_settings_dialog)
+    
+    def show_settings_dialog(self):
+        from ui.settings_dialog import SettingsDialog
+        dlg = SettingsDialog(self)
+        dlg.exec()
+
     def _setup_central_widget(self):
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -259,6 +276,8 @@ class MainWindow(QMainWindow):
         )
         self.action_welcome.setIcon(get_icon(IconType.INFO, t['text_primary'], 16))
         self.action_about.setIcon(get_icon(IconType.INFO, t['text_primary'], 16))
+        self.action_settings.setIcon(get_icon(IconType.SETTINGS, t['text_primary'], 16))  # Add this
+
         
     def toggle_theme(self):
         theme.toggle_theme()
@@ -290,10 +309,30 @@ class MainWindow(QMainWindow):
             if url:
                 self.handle_new_download(url)
                 
-    def handle_new_download(self, url):
+    def handle_new_download(self, payload):
+        import json
+        
+        url = payload
+        filename = None
+        filesize = 0
+        quality = None
+        itag = None
+        
+        # Try to parse as JSON metadata from extension
+        if payload.strip().startswith('{'):
+            try:
+                data = json.loads(payload)
+                url = data.get('url', payload)
+                filename = data.get('filename')
+                filesize = data.get('filesize', 0)
+                quality = data.get('quality')
+                itag = data.get('itag')
+            except:
+                pass
+
         try:
             with open("debug_urls.log", "a") as f:
-                f.write(f"Received URL: {url}\n")
+                f.write(f"Received payload: {payload}\nParsed URL: {url}\nFile: {filename}\nQuality: {quality}\nItag: {itag}\n")
         except:
             pass
 
@@ -304,10 +343,28 @@ class MainWindow(QMainWindow):
         self.setWindowState(self.windowState() & ~Qt.WindowMinimized | Qt.WindowActive)
         
         try:
-            confirm_dlg = DownloadConfirmationDialog(url, self)
+            # Pass metadata to dialog (including quality/itag from extension)
+            confirm_dlg = DownloadConfirmationDialog(
+                url, 
+                self, 
+                filename=filename, 
+                filesize=filesize,
+                quality=quality,  # Pass quality from extension
+                itag=itag         # Pass itag from extension
+            )
             if confirm_dlg.exec():
-                final_url, save_path, auto_start = confirm_dlg.get_data()
-                task = self.manager.add_download(final_url, save_path, auto_start)
+                # Unpack ALL 6 values from get_data() including quality/itag
+                final_url, save_path, auto_start, file_size, returned_quality, returned_itag = confirm_dlg.get_data()
+                
+                # Use returned values (user might have changed them in dialog)
+                task = self.manager.add_download(
+                    final_url, 
+                    save_path, 
+                    auto_start, 
+                    file_size=file_size, 
+                    quality=returned_quality,  # Use value from dialog
+                    itag=returned_itag         # Use value from dialog
+                )
                 
                 if auto_start:
                     self.open_progress_dialog(task)
@@ -509,3 +566,18 @@ class MainWindow(QMainWindow):
         self.updater.update_available.connect(self.show_update_dialog)
         self.updater.up_to_date.connect(self._handle_up_to_date)
         self.updater.error_occurred.connect(self._handle_update_error)
+    def _start_ytdlp_updater(self):
+        try:
+            self._ytdlp_updater = YtDlpUpdater(force_check=False)
+            self._ytdlp_updater.status_signal.connect(self._on_ytdlp_status)
+            self._ytdlp_updater.finished_signal.connect(self._on_ytdlp_finished)
+            self._ytdlp_updater.start()
+        except Exception as e:
+            print(f'DEBUG: Failed to start yt-dlp updater: {e}')
+
+    def _on_ytdlp_status(self, status):
+        self.status_bar.showMessage(status, 3000)
+
+    def _on_ytdlp_finished(self, success, message):
+        if success and message == 'updated':
+            self.status_bar.showMessage('yt-dlp updated successfully', 5000)

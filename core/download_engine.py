@@ -15,27 +15,9 @@ except ImportError:
     proxy_manager = None
 
 
-def get_proxy_url():
-    """Get proxy URL - user configured or built-in"""
-    # First check user-configured proxy
-    if settings:
-        user_proxy = settings.get_proxy_url()
-        if user_proxy:
-            return user_proxy
-    
-    # Fall back to built-in proxy manager
-    if proxy_manager:
-        return proxy_manager.get_proxy()
-    
-    return None
-
-
-def get_proxy_dict():
-    """Get proxy dict for requests"""
-    url = get_proxy_url()
-    if url:
-        return {"http": url, "https": url}
-    return None
+# REMOVED get_proxy_url() and get_proxy_dict()
+# Proxies are now ONLY used for YouTube downloads via yt-dlp
+# Regular downloads use direct connection for better performance and reliability
 
 
 class YtDlpWorker(QThread):
@@ -43,7 +25,7 @@ class YtDlpWorker(QThread):
     progress_signal = Signal(int)
     finished_signal = Signal()
     error_signal = Signal(str)
-    status_signal = Signal(str)  # New: for status updates
+    status_signal = Signal(str)
 
     def __init__(self, url, save_path, itag=None, quality=None):
         super().__init__()
@@ -53,7 +35,7 @@ class YtDlpWorker(QThread):
         self.quality = quality
         self._stop_flag = False
         self.actual_file_path = None
-        self._max_proxy_retries = 5  # Try up to 5 different proxies
+        self._max_proxy_retries = 8  # Try up to 8 different proxies
 
     def stop(self):
         self._stop_flag = True
@@ -71,13 +53,32 @@ class YtDlpWorker(QThread):
             self.error_signal.emit("YT_DLP_NOT_INSTALLED")
             return
         
-        # Direct connection failed, try with proxies
-        print("DEBUG: Direct connection failed, trying with proxies...")
-        self.status_signal.emit("Direct connection blocked, finding proxy...")
+        # Direct connection failed - try DEFAULT proxy immediately (no validation!)
+        print("DEBUG: Direct connection failed, trying DEFAULT proxy...")
+        self.status_signal.emit("Trying built-in proxy...")
+        
+        if proxy_manager:
+            default_proxy = proxy_manager.get_default_proxy()
+            if default_proxy:
+                proxy_display = default_proxy.split("://")[-1][:25]
+                print(f"DEBUG: Trying default proxy: {default_proxy}")
+                result = self._attempt_download(proxy_url=default_proxy)
+                
+                if result == "success":
+                    print("DEBUG: ✅ Default proxy worked!")
+                    return
+                elif result == "stopped":
+                    return
+                else:
+                    print("DEBUG: ❌ Default proxy failed, will fetch more...")
+        
+        # Default proxy failed - now fetch and validate more proxies
+        print("DEBUG: Default proxy failed, trying with validated proxies...")
+        self.status_signal.emit("Direct blocked, finding proxies...")
         
         # Ensure we have proxies
         if proxy_manager:
-            if proxy_manager.needs_refresh() or proxy_manager.get_working_count() == 0:
+            if proxy_manager.needs_refresh() or proxy_manager.get_working_count() < 3:
                 self.status_signal.emit("Fetching fresh proxies...")
                 self._refresh_proxies_sync()
         
@@ -86,15 +87,19 @@ class YtDlpWorker(QThread):
             if self._stop_flag:
                 return
             
-            proxy_url = get_proxy_url()
+            proxy_url = None
+            if proxy_manager:
+                proxy_url = proxy_manager.get_proxy()
+            
             if not proxy_url:
                 self.status_signal.emit("No proxies available")
                 self.error_signal.emit("PROXY_UNAVAILABLE")
                 return
             
-            proxy_display = proxy_url.split('@')[-1][:30] if '@' in proxy_url else proxy_url[:30]
-            self.status_signal.emit(f"Trying proxy {attempt + 1}/{self._max_proxy_retries}...")
-            print(f"DEBUG: Attempt {attempt + 1} with proxy: {proxy_display}...")
+            # Display short proxy info
+            proxy_display = proxy_url.split("://")[-1][:25]
+            self.status_signal.emit(f"Proxy {attempt + 1}/{self._max_proxy_retries}: {proxy_display}...")
+            print(f"DEBUG: Attempt {attempt + 1} with proxy: {proxy_url[:50]}...")
             
             result = self._attempt_download(proxy_url=proxy_url)
             
@@ -126,8 +131,8 @@ class YtDlpWorker(QThread):
         
         proxy_manager.refresh_proxies(callback=on_done)
         
-        # Wait up to 60 seconds for proxies
-        event.wait(timeout=60)
+        # Wait up to 90 seconds for proxies
+        event.wait(timeout=90)
     
     def _attempt_download(self, proxy_url=None):
         """
@@ -157,7 +162,7 @@ class YtDlpWorker(QThread):
                 "--socket-timeout", "30",
                 "--retries", "3",
                 "--fragment-retries", "3",
-                "--retry-sleep", "3",
+                "--retry-sleep", "2",
                 "-f", format_selector,
                 "--merge-output-format", "mp4",
                 "-o", output_template,
@@ -169,7 +174,7 @@ class YtDlpWorker(QThread):
             
             cmd.append(self.url)
             
-            print(f"DEBUG: yt-dlp command: {' '.join(cmd[:10])}...")
+            print(f"DEBUG: yt-dlp command: {' '.join(cmd[:12])}...")
             
             # Delete existing file
             expected_file = os.path.join(save_dir, save_name + ".mp4")
@@ -190,6 +195,7 @@ class YtDlpWorker(QThread):
             download_started = False
             last_progress = 0
             network_error = False
+            gave_up = False
             
             for line in process.stdout:
                 if self._stop_flag:
@@ -201,30 +207,45 @@ class YtDlpWorker(QThread):
                 if line:
                     print(f"yt-dlp: {line}")
                 
-                # Detect network/proxy errors
+                line_lower = line.lower()
+                
+                # Detect network/proxy errors - IMPROVED DETECTION
                 error_indicators = [
-                    "Unable to download webpage",
-                    "Connection refused",
-                    "Connection reset",
-                    "Connection timed out",
-                    "Proxy error",
-                    "HTTPSConnectionPool",
-                    "Max retries exceeded",
-                    "Network is unreachable",
-                    "No route to host",
-                    "HTTP Error 403",
-                    "HTTP Error 429",
-                    "Got error: 403",
+                    "timed out",
+                    "timeout",
+                    "connection refused",
+                    "connection reset",
+                    "unable to download webpage",
+                    "proxy error",
+                    "httpconnectionpool",
+                    "httpsconnectionpool",
+                    "max retries exceeded",
+                    "network is unreachable",
+                    "no route to host",
+                    "http error 403",
+                    "http error 429",
+                    "got error: 403",
+                    "got error",  # Generic yt-dlp error during download
                     "urlopen error",
-                    "Errno 10060",
-                    "Errno 10061",
-                    "Errno 111",
+                    "errno 10060",
+                    "errno 10061",
+                    "errno 111",
+                    "failed to resolve",
+                    "name resolution",
+                    "connect timeout",
+                    "read timeout",
+                    "giving up after",
                 ]
                 
                 for indicator in error_indicators:
-                    if indicator.lower() in line.lower():
+                    if indicator in line_lower:
                         network_error = True
+                        print(f"DEBUG: Network error detected: {indicator}")
                         break
+                
+                # Detect "giving up"
+                if "giving up" in line_lower:
+                    gave_up = True
                 
                 if "[download]" in line:
                     if "Destination:" in line:
@@ -234,12 +255,14 @@ class YtDlpWorker(QThread):
                         except:
                             pass
                     
-                    if "%" in line and ("ETA" in line or "MiB" in line or "KiB" in line or "GiB" in line):
+                    # Progress parsing
+                    if "%" in line and any(x in line for x in ["ETA", "MiB", "KiB", "GiB", "B/s"]):
                         download_started = True
                         try:
                             for part in line.split():
                                 if '%' in part:
-                                    pct = float(part.replace('%', ''))
+                                    pct_str = part.replace('%', '').strip()
+                                    pct = float(pct_str)
                                     if pct > last_progress:
                                         last_progress = pct
                                         self.progress_signal.emit(int(pct))
@@ -252,32 +275,40 @@ class YtDlpWorker(QThread):
             
             process.wait()
             
-            print(f"DEBUG: yt-dlp exit code: {process.returncode}, network_error: {network_error}")
+            print(f"DEBUG: yt-dlp exit code: {process.returncode}, network_error: {network_error}, gave_up: {gave_up}, started: {download_started}, progress: {last_progress}%")
             
             # Check if it failed due to network
             if process.returncode != 0:
-                if network_error or not download_started:
+                # If we detected network errors OR download never properly started, retry with proxy
+                if network_error or gave_up or not download_started:
                     return "failed"  # Will retry with different proxy
+                # Even if download started, if we got very little progress it's likely a network issue
+                elif download_started and last_progress < 5:
+                    print("DEBUG: Download started but made no progress - treating as network error")
+                    return "failed"
                 else:
-                    # Some other error
+                    # Some other error (format not available, etc)
                     self.error_signal.emit(f"yt-dlp failed (exit {process.returncode})")
                     return "failed"
             
             # Verify file exists
-            for ext in ['.mp4', '.mkv', '.webm']:
+            for ext in ['.mp4', '.mkv', '.webm', '.mp4.part']:
                 check_path = os.path.join(save_dir, save_name + ext)
-                if os.path.exists(check_path) and os.path.getsize(check_path) > 0:
-                    self.progress_signal.emit(100)
-                    self.finished_signal.emit()
-                    return "success"
+                if os.path.exists(check_path):
+                    size = os.path.getsize(check_path)
+                    if size > 10000:  # At least 10KB
+                        self.progress_signal.emit(100)
+                        self.finished_signal.emit()
+                        return "success"
             
             # Check actual path from yt-dlp output
             if self.actual_file_path and os.path.exists(self.actual_file_path):
-                if os.path.getsize(self.actual_file_path) > 0:
+                if os.path.getsize(self.actual_file_path) > 10000:
                     self.progress_signal.emit(100)
                     self.finished_signal.emit()
                     return "success"
             
+            # File not found or too small
             return "failed"
                 
         except FileNotFoundError:
@@ -287,23 +318,51 @@ class YtDlpWorker(QThread):
             traceback.print_exc()
             print(f"DEBUG: Download attempt exception: {e}")
             return "failed"
-
+    
     def _build_format_selector(self):
-        if self.itag:
-            return f"{self.itag}+bestaudio[ext=m4a]/best"
+        """Build yt-dlp format selector string"""
         
+        # If specific itag is provided, use it directly
+        if self.itag:
+            print(f"DEBUG: Using specific itag: {self.itag}")
+            # Try the exact itag with best audio, fallback to itag alone, then best
+            return f"{self.itag}+bestaudio[ext=m4a]/{self.itag}+bestaudio/{self.itag}/best"
+        
+        # If quality string is provided
         if self.quality:
-            q = self.quality.lower()
+            q = self.quality.lower().strip()
+            print(f"DEBUG: Using quality string: {q}")
+            
             height_map = {
-                "4k": 2160, "2160p": 2160, "1440p": 1440,
-                "1080p": 1080, "720p": 720, "480p": 480,
-                "360p": 360, "240p": 240, "144p": 144,
+                "4k": 2160, "2160p": 2160, "2160": 2160,
+                "1440p": 1440, "1440": 1440,
+                "1080p": 1080, "1080": 1080,
+                "720p": 720, "720": 720,
+                "480p": 480, "480": 480,
+                "360p": 360, "360": 360,
+                "240p": 240, "240": 240,
+                "144p": 144, "144": 144,
             }
             
+            # Find matching height
+            target_height = None
             for key, height in height_map.items():
                 if key in q:
-                    return f"bestvideo[height<={height}][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<={height}]+bestaudio/best[height<={height}]/best"
+                    target_height = height
+                    break
+            
+            if target_height:
+                # Exact height match preferred
+                return (
+                    f"bestvideo[height={target_height}][ext=mp4]+bestaudio[ext=m4a]/"
+                    f"bestvideo[height={target_height}]+bestaudio/"
+                    f"bestvideo[height<={target_height}][ext=mp4]+bestaudio[ext=m4a]/"
+                    f"bestvideo[height<={target_height}]+bestaudio/"
+                    f"best[height<={target_height}]/best"
+                )
         
+        # Default: best quality available
+        print("DEBUG: Using default format selector (best)")
         return "bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio/best[ext=mp4]/best"
 
 
@@ -349,7 +408,8 @@ class DownloadWorker(QThread):
         }
         
         try:
-            with session.get(self.url, headers=headers, stream=True, timeout=(10, 60), proxies=get_proxy_dict()) as response:
+            # Proxy NOT used for regular downloads - YouTube only!
+            with session.get(self.url, headers=headers, stream=True, timeout=(10, 60)) as response:
                 response.raise_for_status()
                 
                 with open(self.file_path, "ab") as f:
@@ -400,7 +460,8 @@ class SingleThreadWorker(QThread):
         try:
             headers = {'User-Agent': 'Mozilla/5.0'}
             
-            with requests.get(self.url, headers=headers, stream=True, timeout=(15, 120), proxies=get_proxy_dict()) as r:
+            # Proxy NOT used for regular downloads - YouTube only!
+            with requests.get(self.url, headers=headers, stream=True, timeout=(15, 120)) as r:
                 r.raise_for_status()
                 
                 if self.file_size == 0:
@@ -496,15 +557,17 @@ class DownloadTask(QObject):
             self._download_youtube()
             return
         
-        # Direct stream
+        # Direct stream (already extracted URL)
         if "googlevideo.com" in self.url:
-            self._download_with_robust_http(self.url)
+            # This shouldn't happen normally, but handle it
+            self._download_youtube()
             return
         
         # Standard download
         if self.file_size <= 0:
             try:
-                head = requests.head(self.url, allow_redirects=True, timeout=10, proxies=get_proxy_dict())
+                # Proxy NOT used for regular downloads - YouTube only!
+                head = requests.head(self.url, allow_redirects=True, timeout=10)
                 self.file_size = int(head.headers.get('content-length', 0))
                 if self.file_size == 0:
                     self.start_single_thread()
@@ -560,7 +623,7 @@ class DownloadTask(QObject):
     def _on_ytdlp_status(self, status):
         """Handle status updates from yt-dlp worker"""
         print(f"DEBUG: yt-dlp status: {status}")
-        # Could update UI here if needed
+        self.status_changed.emit(status)
     
     def _on_ytdlp_progress(self, progress):
         elapsed = time.time() - self.start_time if self.start_time > 0 else 1
@@ -605,16 +668,20 @@ class DownloadTask(QObject):
             ),
             "PROXY_UNAVAILABLE": (
                 "No working proxies available\n\n"
-                "The app tried to find free proxies but none are currently working.\n"
-                "Please try again later or configure a custom proxy in Settings."
+                "Your network blocks YouTube and proxy sources.\n\n"
+                "Try:\n"
+                "• Use a VPN application\n"
+                "• Configure a manual proxy in Settings\n"
+                "• Try again later"
             ),
             "DOWNLOAD_FAILED_ALL_PROXIES": (
                 "YouTube download failed\n\n"
                 "Tried multiple proxies but none worked.\n\n"
-                "Suggestions:\n"
-                "• Check your internet connection\n"
-                "• Try again later (proxies refresh automatically)\n"
-                "• Configure a reliable proxy in Settings"
+                "Your network has strong restrictions.\n\n"
+                "Try:\n"
+                "• Use a VPN application\n"
+                "• Configure a reliable proxy in Settings\n"
+                "• Download on a different network"
             ),
         }
         
@@ -631,7 +698,8 @@ class DownloadTask(QObject):
     def start_download_standard(self):
         if self.file_size <= 0:
             try:
-                head = requests.head(self.url, allow_redirects=True, timeout=10, proxies=get_proxy_dict())
+                # Proxy NOT used for regular downloads - YouTube only!
+                head = requests.head(self.url, allow_redirects=True, timeout=10)
                 self.file_size = int(head.headers.get('content-length', 0))
                 if self.file_size == 0:
                     self.start_single_thread()
@@ -723,11 +791,13 @@ class DownloadTask(QObject):
         self.status_changed.emit("Paused")
         if self._active_worker and hasattr(self._active_worker, 'pause'):
             self._active_worker.pause()
+        elif self._active_worker and hasattr(self._active_worker, 'stop'):
+            self._active_worker.stop()
         for w in self.workers:
             w.pause()
             
     def resume(self):
-        if self.status in ["Paused", "Stopped", "Queued", "Idle"]:
+        if self.status in ["Paused", "Stopped", "Queued", "Idle", "Error"]:
             self.start_download()
 
     def stop(self):

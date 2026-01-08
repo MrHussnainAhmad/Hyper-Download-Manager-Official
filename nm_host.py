@@ -39,45 +39,86 @@ def main():
     while True:
         try:
             msg = get_message()
-            if msg.get('text') == "download_url":
+            msg_type = msg.get('text')
+            
+            if msg_type == "download_url":
                 url = msg.get('url')
                 log(f"Processing URL: {url}")
-                
-                # Determine Executable Path
-                if getattr(sys, 'frozen', False):
-                    # Running as compiled exe
-                    base_path = os.path.dirname(sys.executable)
-                    
-                    if sys.platform == "win32":
-                        exe_path = os.path.join(base_path, "HyperDownloadManager.exe")
-                    else:
-                        exe_path = os.path.join(base_path, "HyperDownloadManager")
-                else:
-                    # Running from source (dev)
-                    base_path = os.path.dirname(os.path.abspath(__file__))
-                    # We can't really test this easily without python, but dev flow is usually manual
-                    # Point to python and main.py
-                    exe_path = sys.executable
-                    args = [exe_path, os.path.join(base_path, "main.py"), url]
-                
-                log(f"Target Exe Path: {exe_path}")
-                
-                if getattr(sys, 'frozen', False):
-                    if os.path.exists(exe_path):
-                        log("Executable found, launching...")
-                        # On Linux, avoiding shell=True helps with argument parsing
-                        subprocess.Popen([exe_path, url])
-                        log("Launch command sent")
-                    else:
-                        log(f"ERROR: Executable not found at {exe_path}")
-                else:
-                    subprocess.Popen(args)
-                    
+                launch_downloader(url)
                 send_message({"text": "download_started"})
+                
+            elif msg_type == "fetch_variants":
+                url = msg.get('url')
+                log(f"Fetching variants for: {url}")
+                try:
+                    # Import here to avoid startup overhead if not needed immediately, 
+                    # but mostly to ensure we can log import errors safely
+                    from core.youtube_extractor import fetch_youtube_data
+                    data = fetch_youtube_data(url)
+                    send_message({"success": True, "data": data['streams'], "info": data['info']})
+                except Exception as e:
+                    log(f"Error fetching variants: {e}")
+                    send_message({"success": False, "error": str(e)})
+
+            elif msg_type == "download_variant":
+                url = msg.get('url')
+                filename = msg.get('filename')
+                filesize = msg.get('filesize')
+                quality = msg.get('quality')  # e.g., "1080p"
+                itag = msg.get('itag')        # Stream identifier
+                
+                log(f"Downloading variant: {url} (quality: {quality}, itag: {itag})")
+                
+                # Bundle arguments into a JSON string for the main app
+                launch_data = {
+                    "url": url,
+                    "filename": filename,
+                    "filesize": filesize,
+                    "quality": quality,
+                    "itag": itag
+                }
+                
+                launch_downloader(launch_data)
+                send_message({"success": True})
+
         except Exception as e:
             log(f"ERROR: {str(e)}")
             # send_message({"text": "error", "message": str(e)})
             sys.exit(1)
+
+def launch_downloader(data):
+    # Determine Executable Path
+    if getattr(sys, 'frozen', False):
+        base_path = os.path.dirname(sys.executable)
+        if sys.platform == "win32":
+            exe_path = os.path.join(base_path, "HyperDownloadManager.exe")
+        else:
+            exe_path = os.path.join(base_path, "HyperDownloadManager")
+    else:
+        # Running from source (dev)
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        exe_path = sys.executable
+        # Assuming main.py is in the root or same dir as nm_host.py
+        # Based on file list, nm_host.py is in root, main.py is in root.
+        script_path = os.path.join(base_path, "main.py")
+        
+    log(f"Target Exe Path: {exe_path}")
+    
+    # Prepare argument: either raw URL or JSON string
+    if isinstance(data, dict):
+        arg = json.dumps(data)
+    else:
+        arg = data
+
+    if getattr(sys, 'frozen', False):
+        if os.path.exists(exe_path):
+            subprocess.Popen([exe_path, arg])
+            log("Launch command sent")
+        else:
+            log(f"ERROR: Executable not found at {exe_path}")
+    else:
+        # Pass script path if python
+        subprocess.Popen([exe_path, script_path, arg])
 
 if __name__ == '__main__':
     try:

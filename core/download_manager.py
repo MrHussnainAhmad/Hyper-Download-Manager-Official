@@ -2,7 +2,7 @@ import json
 import os
 import time
 from PySide6.QtCore import QObject, Signal, QStandardPaths, QTimer
-from core.downloader import DownloadTask
+from core.download_engine import DownloadTask  # Changed from downloader to download_engine!
 
 class DownloadManager(QObject):
     # Signals
@@ -36,9 +36,31 @@ class DownloadManager(QObject):
         task.finished.connect(self.save_state)
         task.error_occurred.connect(lambda e: self.save_state())
 
-    def add_download(self, url, save_path, auto_start=True):
+    def add_download(self, url, save_path, auto_start=True, file_size=0, quality=None, itag=None):
+        # Defensive Sanitization: Ensure filename is safe for OS
+        directory = os.path.dirname(save_path)
+        filename = os.path.basename(save_path)
+        
+        # Strip query strings if present (the user issue)
+        if '?' in filename:
+            filename = filename.split('?')[0]
+            
+        # Basic character cleanup
+        keep = (" ", ".", "_", "-")
+        clean_name = "".join(c for c in filename if c.isalnum() or c in keep).strip()
+        
+        if not clean_name:
+            clean_name = "download_file"
+            
+        # Special YouTube fallback if name became generic or empty
+        if "videoplayback" in clean_name and "videoplayback" == filename:
+             import time
+             clean_name = f"youtube_video_{int(time.time())}.mp4"
+            
+        save_path = os.path.join(directory, clean_name)
+
         # Check if already exists?
-        task = DownloadTask(url, save_path)
+        task = DownloadTask(url, save_path, file_size=file_size, quality=quality, itag=itag)
         self.downloads.append(task)
         self._connect_task_signals(task)
         self.download_added.emit(task)

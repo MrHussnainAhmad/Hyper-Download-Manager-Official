@@ -45,6 +45,12 @@ function shouldHandleDownload(downloadItem) {
     return false;
   }
 
+  // Ignore YouTube video pages (we handle them via the extension panel)
+  if (downloadItem.url.includes("youtube.com/watch") || downloadItem.url.includes("youtu.be/")) {
+    console.log("Ignoring YouTube page download (handled by panel):", downloadItem.url);
+    return false;
+  }
+
   // Check if it's an image
   const isImage = /\.(png|jpg|jpeg|gif|webp|bmp|svg|ico|tiff)$/i.test(downloadItem.filename || "");
   const isImageMime = (downloadItem.mime && downloadItem.mime.startsWith("image/"));
@@ -78,13 +84,43 @@ function shouldHandleDownload(downloadItem) {
   return true;
 }
 
-function sendToNativeHost(url) {
-  const hostName = "com.hussnain.fdm";
-  chrome.runtime.sendNativeMessage(hostName, { text: "download_url", url: url }, (response) => {
+// Connection to Native Host
+const HOST_NAME = "com.hussnain.fdm";
+
+// Handle messages from content script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === "FETCH_VARIANTS") {
+    sendNativeMessage({ text: "fetch_variants", url: message.url }, sendResponse);
+    return true; // Keep channel open for async response
+  }
+  if (message.type === "DOWNLOAD_VARIANT") {
+    // Pass ALL fields including quality, itag, and filesize
+    sendNativeMessage({
+      text: "download_variant",
+      url: message.url,
+      filename: message.filename,
+      quality: message.quality,      // CRITICAL: Pass quality
+      itag: message.itag,            // CRITICAL: Pass itag
+      filesize: message.filesize     // CRITICAL: Pass filesize
+    }, sendResponse);
+    return true;
+  }
+});
+
+function sendNativeMessage(message, callback) {
+  chrome.runtime.sendNativeMessage(HOST_NAME, message, (response) => {
     if (chrome.runtime.lastError) {
       console.error("Error communicating with native host:", chrome.runtime.lastError.message);
+      if (callback) callback({ success: false, error: chrome.runtime.lastError.message });
     } else {
       console.log("Received response from native host:", response);
+      if (callback) callback(response);
     }
+  });
+}
+
+function sendToNativeHost(url) {
+  sendNativeMessage({ text: "download_url", url: url }, (response) => {
+    // Log handled in sendNativeMessage
   });
 }

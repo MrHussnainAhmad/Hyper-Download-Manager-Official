@@ -12,6 +12,20 @@
   "host_permissions": [
     "<all_urls>"
   ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "youtube_panel.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
   "background": {
     "service_worker": "background.js"
   },

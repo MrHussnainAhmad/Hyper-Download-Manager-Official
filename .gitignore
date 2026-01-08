@@ -33,9 +33,24 @@ Output/
 # VS Code
 .vscode/
 
-# Logs
+# Logs & Debug Files
 *.log
 hdm_debug.log
+bat_debug.log
+dialog_debug.log
+debug_urls.log
+py_host.log
+error.log
+
+# Temporary Text Files (keep version.txt and LICENSE.txt)
+*_debug.txt
+*_output.txt
+*_temp.txt
+test_output.txt
+api_response.txt
+ERROR_EXPLANATION.txt
+PROXY_INFO.txt
+PROXY_SETUP_GUIDE.txt
 
 # Project Specific
 key_temp.txt
@@ -43,6 +58,8 @@ debug_*.py
 nm_manifest.json
 nm_manifest_prod.json
 api_check.py
+verify_fix.py
+manual_test.py
 
 # Local Config (if any remains, though we use AppData now)
 downloads.json
@@ -59,8 +76,8 @@ env/
 Thumbs.db
 
 # Temporary/Output Files
-test_output.txt
-api_response.txt
 .env
-verify_fix.py
-manual_test.py
+
+# Temp Directory
+Temp/
+*.part
