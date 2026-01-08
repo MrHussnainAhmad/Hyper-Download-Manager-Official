@@ -5,7 +5,7 @@ This software and its developer stand in solidarity with the people of Palestine
 
 ## HYPER DOWNLOAD MANAGER
 
-**Version 1.0 | Last Updated: [DATE] | Effective Date: [DATE]**
+**Version 1.0.6 | Last Updated: 1/9/2026 | Effective Date: 1/9/2026**
 
 ---
 
@@ -314,7 +314,7 @@ d) This Agreement does not grant You any ownership interest in or to the Softwar
 
 a) The Software, including all code, content, design, graphics, user interfaces, visual interfaces, photographs, trademarks, logos, sounds, music, artwork, algorithms, Documentation, and all other elements of the Software, is protected by copyright.
 
-b) Copyright © 2024-2026 Hussnain Ahmad. All rights reserved.
+b) Copyright © 2026-20** Hussnain Ahmad. All rights reserved.
 
 c) Any unauthorized reproduction, modification, distribution, or other use of the Software is strictly prohibited and constitutes an infringement of the Author's copyright.
 
@@ -1360,7 +1360,7 @@ For any questions, concerns, feedback, support requests, or legal inquiries rega
 
 ### Copyright Notice
 
-Copyright © 2024-2026 Hussnain Ahmad. All rights reserved.
+Copyright © 2026-20** Hussnain Ahmad. All rights reserved.
 
 This Software and all associated materials are protected by copyright and other intellectual property laws. Unauthorized reproduction, modification, distribution, or use is strictly prohibited and may result in civil and criminal penalties.
 
@@ -1378,9 +1378,9 @@ This End User License Agreement constitutes a legal agreement. By using the Soft
 
 ---
 
-*Last Updated: [Insert Date]*
+*Last Updated: 1/9/2026*
 
-*Version: 1.0*
+*Version: 1.0.5*
 
 *This Agreement was last modified on [Insert Date].*
 
