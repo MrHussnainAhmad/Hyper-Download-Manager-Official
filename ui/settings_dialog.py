@@ -185,7 +185,9 @@ class SettingsDialog(BaseDialog):
         self.tabs.addTab(tab, "YouTube")
     
     def _on_proxy_toggle(self, state):
-        self.proxy_group.setEnabled(state == Qt.Checked)
+        enabled = (state == 2)  # Qt.CheckState.Checked.value == 2
+        print(f"DEBUG: Proxy toggle - state={state}, enabled={enabled}")
+        self.proxy_group.setEnabled(enabled)
     
     def _load_settings(self):
         # Proxy

@@ -57,11 +57,27 @@ class YtDlpWorker(QThread):
         # Direct connection failed - try DEFAULT proxy immediately (no validation!)
         print("DEBUG: Direct connection failed, trying proxy fallback...")
         
-        # 1. Warn user (once)
-        self.proxy_fallback_warning.emit()
+        # Warning already emitted in _attempt_download when first error detected
         
-        # 2. Try MANUAL/CUSTOM PROXY from Settings first (if enabled)
-        custom_proxy_worked = False
+        # 2. Try DEFAULT built-in proxy FIRST (most reliable)
+        self.status_signal.emit("Trying built-in proxy...")
+        
+        if proxy_manager:
+            default_proxy = proxy_manager.get_default_proxy()
+            if default_proxy:
+                proxy_display = default_proxy.split("://")[-1][:25]
+                print(f"DEBUG: Trying default proxy: {default_proxy}")
+                result = self._attempt_download(proxy_url=default_proxy)
+                
+                if result == "success":
+                    print("DEBUG: ✅ Default proxy worked!")
+                    return
+                elif result == "stopped":
+                    return
+                else:
+                    print("DEBUG: ❌ Default proxy failed, will try custom if available...")
+        
+        # 3. Try MANUAL/CUSTOM PROXY from Settings (if enabled)
         if settings and settings.get('proxy.enabled', False):
             host = settings.get('proxy.host', '').strip()
             port = settings.get('proxy.port', '').strip()
@@ -85,24 +101,6 @@ class YtDlpWorker(QThread):
                     return
                 else:
                     print("DEBUG: ❌ Manual proxy failed, falling back to auto list...")
-        
-        # 3. Try DEFAULT built-in proxy
-        self.status_signal.emit("Trying built-in proxy...")
-        
-        if proxy_manager:
-            default_proxy = proxy_manager.get_default_proxy()
-            if default_proxy:
-                proxy_display = default_proxy.split("://")[-1][:25]
-                print(f"DEBUG: Trying default proxy: {default_proxy}")
-                result = self._attempt_download(proxy_url=default_proxy)
-                
-                if result == "success":
-                    print("DEBUG: ✅ Default proxy worked!")
-                    return
-                elif result == "stopped":
-                    return
-                else:
-                    print("DEBUG: ❌ Default proxy failed, will fetch more...")
         
         # Default proxy failed - now fetch and validate more proxies
         print("DEBUG: Default proxy failed, trying with validated proxies...")
@@ -273,6 +271,19 @@ class YtDlpWorker(QThread):
                     if indicator in line_lower:
                         network_error = True
                         print(f"DEBUG: Network error detected: {indicator}")
+                        # Emit warning immediately on first network error
+                        if not hasattr(self, '_warning_emitted'):
+                            self._warning_emitted = True
+                            self.proxy_fallback_warning.emit()
+                            print("DEBUG: ⚠️ Proxy fallback warning emitted")
+                        
+                        # Stop yt-dlp immediately to try proxy instead
+                        if proxy_url is None and not hasattr(self, '_first_error_stop'):
+                            self._first_error_stop = True
+                            print("DEBUG: Stopping direct attempt, will retry with proxy...")
+                            process.terminate()
+                            process.wait()
+                            return "failed"
                         break
                 
                 # Detect "giving up"
@@ -550,6 +561,17 @@ class DownloadTask(QObject):
         self.save_dir = os.path.dirname(save_path)
         self.file_name = os.path.basename(save_path)
         
+        # Sanitize filename for use in paths (remove trailing/invalid chars)
+        import re
+        safe_name = self.file_name
+        # Remove invalid Windows path characters: \ / : * ? " < > |
+        safe_name = re.sub(r'[\\/:*?"<>|]', '_', safe_name)
+        # Remove trailing dots and spaces (Windows doesn't allow these)
+        safe_name = safe_name.rstrip('. ')
+        # Ensure we have a valid name
+        if not safe_name:
+            safe_name = "download"
+        
         import sys
         if getattr(sys, 'frozen', False):
             base_path = os.path.dirname(sys.executable)
@@ -559,9 +581,9 @@ class DownloadTask(QObject):
             
         central_temp = os.path.join(base_path, "Temp")
         if os.path.exists(central_temp) and os.access(central_temp, os.W_OK):
-            self.temp_dir = os.path.join(central_temp, self.file_name)
+            self.temp_dir = os.path.join(central_temp, safe_name)
         else:
-            self.temp_dir = os.path.join(self.save_dir, ".fdm_temp", self.file_name)
+            self.temp_dir = os.path.join(self.save_dir, ".fdm_temp", safe_name)
         
     def _prepare_temp_dir(self):
         if not os.path.exists(self.temp_dir):

@@ -307,34 +307,91 @@ class MetadataFetcher(QThread):
             # Network request for additional metadata
             if size == 0 or name == "download.file":
                 try:
-                    print("DEBUG: Fetching headers via HEAD request...")
+                    print("DEBUG: Fetching headers...")
                     headers = {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                        'Accept-Language': 'en-US,en;q=0.9',
+                        'Accept-Encoding': 'identity',  # Don't use gzip for range requests
+                        'Connection': 'keep-alive',
+                        'Upgrade-Insecure-Requests': '1'
                     }
                     
-                    head = requests.head(
-                        self.url, 
-                        headers=headers, 
-                        allow_redirects=True, 
-                        timeout=8
-                    )
+                    # GitHub releases don't support HEAD properly - use GET with Range
+                    is_github = 'github.com' in self.url.lower() and '/releases/download/' in self.url.lower()
                     
-                    # Try Content-Disposition header for filename
-                    if "Content-Disposition" in head.headers:
-                        import re
-                        cd = head.headers["Content-Disposition"]
-                        fname_match = re.findall(r'filename[*]?=["\']?([^"\';]+)', cd)
-                        if fname_match:
-                            clean_name = unquote(fname_match[0].strip())
-                            if clean_name:
-                                name = clean_name
-                                print(f"DEBUG: Name from Content-Disposition: {name}")
-                    
-                    # Get size from Content-Length
-                    if size == 0:
-                        size = int(head.headers.get('content-length', 0))
-                        if size > 0:
-                            print(f"DEBUG: Size from headers: {size}")
+                    if is_github:
+                        print("DEBUG: GitHub release detected - using GET with Range header...")
+                        print(f"DEBUG: Full requesting URL: {self.url}")  # FULL URL
+                        headers['Range'] = 'bytes=0-1'
+                        response = requests.get(self.url, headers=headers, stream=True, timeout=8, allow_redirects=True)
+                        
+                        print(f"DEBUG: Final URL: {response.url[:100]}")
+                        print(f"DEBUG: Status code: {response.status_code}")
+                        
+                        if response.status_code in [200, 206]:  # 206 = Partial Content
+                            # Get size from Content-Range or Content-Length
+                            if 'Content-Range' in response.headers:
+                                # Format: bytes 0-1/TOTAL_SIZE
+                                size = int(response.headers['Content-Range'].split('/')[-1])
+                                print(f"DEBUG: Size from Content-Range: {size}")
+                            elif 'Content-Length' in response.headers:
+                                size = int(response.headers['Content-Length'])
+                                print(f"DEBUG: Size from Content-Length: {size}")
+                            
+                            # Get filename from Content-Disposition
+                            if 'Content-Disposition' in response.headers:
+                                import re
+                                cd = response.headers['Content-Disposition']
+                                fname_match = re.findall(r'filename[*]?=["\']?([^"\';]+)', cd)
+                                if fname_match:
+                                    name = unquote(fname_match[0].strip())
+                                    print(f"DEBUG: Name from Content-Disposition: {name}")
+                        else:
+                            print(f"DEBUG: ⚠️ HTTP error {response.status_code}")
+                        
+                        response.close()
+                    else:
+                        # Standard HEAD request for non-GitHub URLs
+                        head = requests.head(
+                            self.url, 
+                            headers=headers, 
+                            allow_redirects=True, 
+                            timeout=8
+                        )
+                        
+                        print(f"DEBUG: Final URL after redirects: {head.url[:100]}")
+                        print(f"DEBUG: Status code: {head.status_code}")
+                        print(f"DEBUG: Content-Length header: {head.headers.get('content-length', 'NOT FOUND')}")
+                        
+                        # Check for errors
+                        if head.status_code == 404:
+                            print("DEBUG: ⚠️ File not found (404) - URL may be invalid or private")
+                            size = 0
+                        elif head.status_code >= 400:
+                            print(f"DEBUG: ⚠️ HTTP error {head.status_code}")
+                            size = 0
+                        
+                        # Try Content-Disposition header for filename
+                        if head.status_code == 200 and "Content-Disposition" in head.headers:
+                            import re
+                            cd = head.headers["Content-Disposition"]
+                            fname_match = re.findall(r'filename[*]?=["\']?([^"\';]+)', cd)
+                            if fname_match:
+                                clean_name = unquote(fname_match[0].strip())
+                                if clean_name:
+                                    name = clean_name
+                                    print(f"DEBUG: Name from Content-Disposition: {name}")
+                        
+                        # Get size from Content-Length
+                        if size == 0 and head.status_code == 200:
+                            content_len = head.headers.get('content-length', '0')
+                            try:
+                                size = int(content_len)
+                                if size > 0:
+                                    print(f"DEBUG: Size from headers: {size}")
+                            except (ValueError, TypeError):
+                                print(f"DEBUG: Failed to parse content-length: '{content_len}'")
                         
                 except requests.exceptions.Timeout:
                     print("DEBUG: HEAD request timed out")
