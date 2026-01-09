@@ -1,6 +1,15 @@
+## ⚠️ License
+This project is NOT open-source.
+
+The code is visible for transparency only.
+All rights are reserved © Hussnain Ahmad.
+
+Unauthorized copying, reuse, or redistribution is prohibited.
+
+
 # Hyper Download Manager (HDM)
 
-**Hyper Download Manager** is a high-performance, open-source download accelerator built with Python and PySide6. Designed for speed, privacy, and simplicity, it integrates seamlessly with modern browsers to manage your downloads efficiently.
+**Hyper Download Manager** is a high-performance, download accelerator built with Python and PySide6. Designed for speed, privacy, and simplicity, it integrates seamlessly with modern browsers to manage your downloads efficiently.
 
 ![HDM Logo](icon.png)
 
