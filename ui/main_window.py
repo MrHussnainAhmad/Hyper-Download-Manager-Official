@@ -229,12 +229,67 @@ class MainWindow(QMainWindow):
         # Connect status updates
         self.manager.download_added.connect(self.update_status_counts)
         self.manager.download_removed.connect(self.update_status_counts)
+        
+        # Connect signals for new downloads
+        self.manager.download_added.connect(self._setup_new_task_signals)
+        
         # We need to connect to status changes of existing and new tasks
         for task in self.manager.downloads:
-             task.status_changed.connect(lambda s: self.update_status_counts())
+             self._setup_new_task_signals(task)
              
         # Initial update
         self.update_status_counts()
+
+    def _setup_new_task_signals(self, task):
+        """Connect signals for a single task"""
+        # Simply connect - tasks should only be set up once
+        task.status_changed.connect(self._on_task_status_changed)
+        task.proxy_fallback_warning.connect(self.show_youtube_fallback_dialog)
+
+    def _on_task_status_changed(self, status):
+        """Handle status change from any task"""
+        self.update_status_counts()
+
+    def show_youtube_fallback_dialog(self):
+        """Show warning when falling back to proxy for YouTube"""
+        t = theme.current
+        msg = QMessageBox(self)
+        msg.setWindowTitle("YouTube Download Warning")
+        msg.setIcon(QMessageBox.Warning)
+        
+        # Exact text requested by user
+        text = (
+            "YOUR ISP HAVE BANNED DOWNLOADING FROM YOUTUBE, WE ARE TRYING TO GET YOUR VIDEO "
+            "THOURH OUR PROXIES, INCASE AFTER 30 SECONDS YOU DON'T FIND DONWLOAD RUNNING, "
+            "PLEASE USE VPN OR CAN WAIT FEW UPDATES TILL WE ADD PURCHASE PROXY. "
+            "FOR NOW YOU CAN ADD CUSTOM PROXY IN SETTINGS."
+        )
+        msg.setText(text)
+        
+        msg.setStyleSheet(f"""
+            QMessageBox {{
+                background-color: {t['bg_card']};
+            }}
+            QMessageBox QLabel {{
+                color: {t['text_primary']};
+                font-size: 13px;
+            }}
+            QPushButton {{
+                background-color: {t['bg_tertiary']};
+                color: {t['text_primary']};
+                border: 1px solid {t['border_primary']};
+                border-radius: 6px;
+                padding: 6px 16px;
+                min-width: 80px;
+            }}
+            QPushButton:hover {{
+                background-color: {t['bg_hover']};
+            }}
+        """)
+        
+        # Show non-blocking so download can continue in background
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec()
 
     def update_status_counts(self):
         """Update the status bar counts for active and completed downloads"""

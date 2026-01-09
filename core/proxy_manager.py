@@ -18,8 +18,9 @@ from PySide6.QtCore import QThread, Signal, QMutex, QMutexLocker, QStandardPaths
 # Update this with a current working proxy from proxy-list.download or similar
 
 # Test this regularly and update if dead - free proxies die fast!
-DEFAULT_BEST_PROXY = "http://185.162.228.73:3128"  # Updated: 2026-01-09
-# Backup: "http://103.152.112.162:80" | "http://154.26.135.123:3128"
+# Last verified working with yt-dlp in this environment: 2026-01-09
+DEFAULT_BEST_PROXY = "http://103.81.194.165:8080"
+# Previous: "http://185.162.228.73:3128"
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -30,6 +31,16 @@ DEFAULT_BEST_PROXY = "http://185.162.228.73:3128"  # Updated: 2026-01-09
 EMBEDDED_PROXIES = [
     # Format: (host:port, type)
     # HTTP Proxies (commonly working ones)
+    # Prioritized (YouTube-tested recently; free proxies may die quickly)
+    ("103.81.194.165:8080", "http"),
+    ("103.81.194.120:8080", "http"),
+    ("38.180.2.107:3128", "http"),
+    ("103.81.194.124:8080", "http"),
+    ("103.81.194.125:8080", "http"),
+    ("140.238.184.182:3128", "http"),
+    ("157.66.84.32:8181", "http"),
+    ("49.229.100.235:8080", "http"),
+
     ("154.26.135.123:3128", "http"),
     ("45.77.147.46:3128", "http"),
     ("8.219.97.248:80", "http"),

@@ -26,6 +26,7 @@ class YtDlpWorker(QThread):
     finished_signal = Signal()
     error_signal = Signal(str)
     status_signal = Signal(str)
+    proxy_fallback_warning = Signal()
 
     def __init__(self, url, save_path, itag=None, quality=None):
         super().__init__()
@@ -54,7 +55,38 @@ class YtDlpWorker(QThread):
             return
         
         # Direct connection failed - try DEFAULT proxy immediately (no validation!)
-        print("DEBUG: Direct connection failed, trying DEFAULT proxy...")
+        print("DEBUG: Direct connection failed, trying proxy fallback...")
+        
+        # 1. Warn user (once)
+        self.proxy_fallback_warning.emit()
+        
+        # 2. Try MANUAL/CUSTOM PROXY from Settings first (if enabled)
+        custom_proxy_worked = False
+        if settings and settings.get('proxy.enabled', False):
+            host = settings.get('proxy.host', '').strip()
+            port = settings.get('proxy.port', '').strip()
+            if host and port:
+                self.status_signal.emit("Trying custom proxy...")
+                ptype = settings.get('proxy.type', 'http')
+                user = settings.get('proxy.username', '').strip()
+                pwd = settings.get('proxy.password', '')
+                
+                if user and pwd:
+                    manual_proxy = f"{ptype}://{user}:{pwd}@{host}:{port}"
+                else:
+                    manual_proxy = f"{ptype}://{host}:{port}"
+                    
+                print(f"DEBUG: Trying manual proxy: {ptype}://{host}:{port}")
+                result = self._attempt_download(proxy_url=manual_proxy)
+                if result == "success":
+                    print("DEBUG: ✅ Manual proxy worked!")
+                    return
+                elif result == "stopped":
+                    return
+                else:
+                    print("DEBUG: ❌ Manual proxy failed, falling back to auto list...")
+        
+        # 3. Try DEFAULT built-in proxy
         self.status_signal.emit("Trying built-in proxy...")
         
         if proxy_manager:
@@ -496,6 +528,7 @@ class DownloadTask(QObject):
     status_changed = Signal(str)
     finished = Signal()
     error_occurred = Signal(str)
+    proxy_fallback_warning = Signal()
 
     def __init__(self, url, save_path, file_size=0, threads=4, quality=None, itag=None):
         super().__init__()
@@ -617,6 +650,7 @@ class DownloadTask(QObject):
         self.ytdlp_worker.finished_signal.connect(self._on_ytdlp_finished)
         self.ytdlp_worker.error_signal.connect(self._on_ytdlp_error)
         self.ytdlp_worker.status_signal.connect(self._on_ytdlp_status)
+        self.ytdlp_worker.proxy_fallback_warning.connect(self.proxy_fallback_warning.emit)
         self._active_worker = self.ytdlp_worker
         self.ytdlp_worker.start()
     
